@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神秘占卜 | 探索命运的奥秘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5B21B6', // 主色调：深紫色
+                        secondary: '#8B5CF6', // 辅助色：紫色
+                        accent: '#C084FC', // 强调色：淡紫色
+                        dark: '#1E1B4B', // 深色背景
+                        light: '#F5F3FF', // 浅色文本
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+            }
+            .bg-stars {
+                background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+                background-size: 50px 50px;
+            }
+            .card-hover {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(180, 151, 238, 0.4);
+            }
+            .tarot-card {
+                transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+            .tarot-card:hover {
+                transform: rotateY(10deg) translateY(-10px);
+            }
+            .tarot-card.flipped {
+                transform: rotateY(180deg);
+            }
+            .star-animation {
+                animation: star-fall 3s infinite ease-in-out;
+            }
+            @keyframes star-fall {
+                0%, 100% {
+                    opacity: 0;
+                    transform: translateY(0);
+                }
+                50% {
+                    opacity: 1;
+                }
+            }
+            .horoscope-card {
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .horoscope-card:hover {
+                transform: scale(1.03);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            }
+            .生肖-card {
+                transition: all 0.3s ease;
+            }
+            .生肖-card:hover {
+                background-color: rgba(139, 92, 246, 0.1);
+            }
+            .btn-purple {
+                @apply bg-primary hover:bg-secondary text-white font-medium py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1;
+            }
+            .nav-link {
+                @apply relative px-4 py-2 text-light hover:text-accent transition-colors duration-300;
+            }
+            .nav-link::after {
+                content: '';
+                @apply absolute w-0 h-0.5 bg-accent bottom-0 left-0 transition-all duration-300;
+            }
+            .nav-link:hover::after {
+                @apply w-full;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-dark to-primary min-h-screen text-light overflow-x-hidden">
+    <!-- 星空背景 -->
+    <div class="fixed inset-0 bg-stars opacity-20 pointer-events-none"></div>
+    
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="navbar">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <i class="fa fa-moon-o text-2xl text-accent"></i>
+                <span class="text-xl font-bold">神秘占卜</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#home" class="nav-link">首页</a>
+                <a href="#tarot" class="nav-link">塔罗占卜</a>
+                <a href="#horoscope" class="nav-link">星座运势</a>
+                <a href="#zodiac" class="nav-link">生肖命理</a>
+                <a href="#about" class="nav-link">关于我们</a>
+            </nav>
+            <button class="md:hidden text-2xl" id="menu-toggle">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="md:hidden bg-dark/90 backdrop-blur-md hidden" id="mobile-menu">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#home" class="text-light hover:text-accent py-2 border-b border-gray-700">首页</a>
+                <a href="#tarot" class="text-light hover:text-accent py-2 border-b border-gray-700">塔罗占卜</a>
+                <a href="#horoscope" class="text-light hover:text-accent py-2 border-b border-gray-700">星座运势</a>
+                <a href="#zodiac" class="text-light hover:text-accent py-2 border-b border-gray-700">生肖命理</a>
+                <a href="#about" class="text-light hover:text-accent py-2">关于我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容 -->
+    <main class="pt-24 pb-16">
+        <!-- 英雄区域 -->
+        <section id="home" class="relative min-h-[80vh] flex items-center justify-center">
+            <div class="absolute inset-0 bg-gradient-to-b from-dark/70 to-primary/70"></div>
+            <div class="container mx-auto px-4 relative z-10 text-center">
+                <h1 class="text-[clamp(2.5rem,6vw,4.5rem)] font-bold mb-6 leading-tight text-shadow-lg">
+                    探索命运的<span class="text-accent">奥秘</span>
+                </h1>
+                <p class="text-[clamp(1rem,2vw,1.25rem)] max-w-2xl mx-auto mb-10 text-light/90">
+                    通过古老的占卜艺术，洞察过去、现在与未来，寻找内心的指引与答案
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+                    <a href="#tarot" class="btn-purple">
+                        <i class="fa fa-tarot-card-o mr-2"></i>塔罗占卜
+                    </a>
+                    <a href="#horoscope" class="btn-purple bg-secondary/80 hover:bg-secondary">
+                        <i class="fa fa-star-o mr-2"></i>星座运势
+                    </a>
+                    <a href="#zodiac" class="btn-purple bg-secondary/60 hover:bg-secondary/80">
+                        <i class="fa fa-paw mr-2"></i>生肖命理
+                    </a>
+                </div>
+                <div class="flex justify-center space-x-6 text-3xl text-light/70 animate-bounce">
+                    <a href="#tarot" class="hover:text-accent transition-colors">
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 塔罗占卜 -->
+        <section id="tarot" class="py-20 bg-dark/50 relative">
+            <div class="absolute inset-0 bg-stars opacity-10 pointer-events-none"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold mb-4 text-shadow">塔罗占卜</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto">
+                        塔罗牌是一种古老的占卜工具，每张牌都蕴含着独特的象征意义，揭示潜意识中的信息和可能的未来走向
+                    </p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h3 class="text-xl font-semibold mb-3">选择你的牌阵</h3>
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <button class="bg-primary/70 hover:bg-primary px-5 py-2 rounded-full transition-all duration-300 active" data-spread="single">
+                                单张牌
+                            </button>
+                            <button class="bg-dark/70 hover:bg-primary/70 px-5 py-2 rounded-full transition-all duration-300" data-spread="three">
+                                三张牌
+                            </button>
+                            <button class="bg-dark/70 hover:bg-primary/70 px-5 py-2 rounded-full transition-all duration-300" data-spread="celtic">
+                                凯尔特十字
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mb-8">
+                        <p class="text-light/70 mb-4">集中精神，想着你的问题，然后点击牌面抽取</p>
+                        <button id="draw-tarot" class="btn-purple">
+                            <i class="fa fa-shuffle mr-2"></i>抽取塔罗牌
+                        </button>
+                    </div>
+                    
+                    <div id="tarot-results" class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center mt-12 opacity-0 transition-opacity duration-700">
+                        <!-- 塔罗牌结果将在这里显示 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 星座运势 -->
+        <section id="horoscope" class="py-20 bg-primary/30 relative">
+            <div class="absolute inset-0 bg-stars opacity-10 pointer-events-none"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold mb-4 text-shadow">星座运势</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto">
+                        探索星座的奥秘，了解每日、每周和每月的运势走向，把握机遇，面对挑战
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- 星座卡片 -->
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♈</div>
+                        <h3 class="text-xl font-semibold mb-2">白羊座</h3>
+                        <p class="text-light/70 text-sm mb-4">3月21日 - 4月19日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="aries">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♉</div>
+                        <h3 class="text-xl font-semibold mb-2">金牛座</h3>
+                        <p class="text-light/70 text-sm mb-4">4月20日 - 5月20日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="taurus">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♊</div>
+                        <h3 class="text-xl font-semibold mb-2">双子座</h3>
+                        <p class="text-light/70 text-sm mb-4">5月21日 - 6月20日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="gemini">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♋</div>
+                        <h3 class="text-xl font-semibold mb-2">巨蟹座</h3>
+                        <p class="text-light/70 text-sm mb-4">6月21日 - 7月22日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="cancer">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♌</div>
+                        <h3 class="text-xl font-semibold mb-2">狮子座</h3>
+                        <p class="text-light/70 text-sm mb-4">7月23日 - 8月22日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="leo">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♍</div>
+                        <h3 class="text-xl font-semibold mb-2">处女座</h3>
+                        <p class="text-light/70 text-sm mb-4">8月23日 - 9月22日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="virgo">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♎</div>
+                        <h3 class="text-xl font-semibold mb-2">天秤座</h3>
+                        <p class="text-light/70 text-sm mb-4">9月23日 - 10月22日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="libra">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♏</div>
+                        <h3 class="text-xl font-semibold mb-2">天蝎座</h3>
+                        <p class="text-light/70 text-sm mb-4">10月23日 - 11月21日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="scorpio">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♐</div>
+                        <h3 class="text-xl font-semibold mb-2">射手座</h3>
+                        <p class="text-light/70 text-sm mb-4">11月22日 - 12月21日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="sagittarius">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♑</div>
+                        <h3 class="text-xl font-semibold mb-2">摩羯座</h3>
+                        <p class="text-light/70 text-sm mb-4">12月22日 - 1月19日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="capricorn">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♒</div>
+                        <h3 class="text-xl font-semibold mb-2">水瓶座</h3>
+                        <p class="text-light/70 text-sm mb-4">1月20日 - 2月18日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="aquarius">查看运势</button>
+                    </div>
+                    
+                    <div class="horoscope-card bg-dark/50 backdrop-blur-sm rounded-xl p-6 border border-accent/20 text-center">
+                        <div class="text-4xl mb-3 text-accent">♓</div>
+                        <h3 class="text-xl font-semibold mb-2">双鱼座</h3>
+                        <p class="text-light/70 text-sm mb-4">2月19日 - 3月20日</p>
+                        <button class="text-accent hover:underline text-sm" data-sign="pisces">查看运势</button>
+                    </div>
+                </div>
+                
+                <!-- 星座运势详情 -->
+                <div id="horoscope-detail" class="mt-16 bg-dark/70 backdrop-blur-md rounded-xl p-8 border border-accent/30 hidden">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="text-2xl font-bold" id="horoscope-title">白羊座今日运势</h3>
+                            <p class="text-light/60" id="horoscope-date">2025年7月8日</p>
+                        </div>
+                        <div class="text-5xl text-accent" id="horoscope-sign">♈</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                        <div class="bg-primary/20 p-4 rounded-lg">
+                            <h4 class="font-semibold mb-2 flex items-center">
+                                <i class="fa fa-heart text-accent mr-2"></i>爱情指数
+                            </h4>
+                            <div class="flex text-accent mb-1">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <p class="text-sm text-light/70">爱情运势良好，有机会遇到心仪的对象，单身者可多参加社交活动。</p>
+                        </div>
+                        
+                        <div class="bg-primary/20 p-4 rounded-lg">
+                            <h4 class="font-semibold mb-2 flex items-center">
+                                <i class="fa fa-briefcase text-accent mr-2"></i>事业指数
+                            </h4>
+                            <div class="flex text-accent mb-1">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <p class="text-sm text-light/70">工作上会遇到一些挑战，需保持积极的态度，勇于面对困难。</p>
+                        </div>
+                        
+                        <div class="bg-primary/20 p-4 rounded-lg">
+                            <h4 class="font-semibold mb-2 flex items-center">
+                                <i class="fa fa-money text-accent mr-2"></i>财运指数
+                            </h4>
+                            <div class="flex text-accent mb-1">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <p class="text-sm text-light/70">财运平稳，适合稳健投资，避免冒险投机。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-primary/20 p-6 rounded-lg">
+                        <h4 class="font-semibold mb-3 flex items-center">
+                            <i class="fa fa-info-circle text-accent mr-2"></i>综合运势
+                        </h4>
+                        <p class="text-light/80" id="horoscope-content">
+                            今日白羊座的整体运势较为顺畅，在爱情方面会有新的机会出现，可能会遇到让你心动的人。在事业上，虽然会面临一些挑战，但只要你保持积极的态度和坚定的信念，都能够克服困难。财运方面，适合稳健投资，避免冒险行为。健康方面，要注意保持良好的作息习惯，避免过度劳累。
+                        </p>
+                    </div>
+                    
+                    <div class="mt-6 text-right">
+                        <button id="close-horoscope" class="text-accent hover:underline">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 生肖命理 -->
+        <section id="zodiac" class="py-20 bg-dark/50 relative">
+            <div class="absolute inset-0 bg-stars opacity-10 pointer-events-none"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold mb-4 text-shadow">生肖命理</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto">
+                        中国传统生肖文化蕴含着深刻的人生哲理，通过生肖了解你的性格特点和命运走向
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                    <!-- 生肖卡片 -->
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="rat">
+                        <div class="text-4xl mb-3 text-accent">🐀</div>
+                        <h3 class="text-lg font-semibold mb-1">鼠</h3>
+                        <p class="text-light/70 text-xs">1996, 2008, 2020</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="ox">
+                        <div class="text-4xl mb-3 text-accent">🐂</div>
+                        <h3 class="text-lg font-semibold mb-1">牛</h3>
+                        <p class="text-light/70 text-xs">1997, 2009, 2021</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="tiger">
+                        <div class="text-4xl mb-3 text-accent">🐅</div>
+                        <h3 class="text-lg font-semibold mb-1">虎</h3>
+                        <p class="text-light/70 text-xs">1998, 2010, 2022</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="rabbit">
+                        <div class="text-4xl mb-3 text-accent">🐇</div>
+                        <h3 class="text-lg font-semibold mb-1">兔</h3>
+                        <p class="text-light/70 text-xs">1999, 2011, 2023</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="dragon">
+                        <div class="text-4xl mb-3 text-accent">🐉</div>
+                        <h3 class="text-lg font-semibold mb-1">龙</h3>
+                        <p class="text-light/70 text-xs">2000, 2012, 2024</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="snake">
+                        <div class="text-4xl mb-3 text-accent">🐍</div>
+                        <h3 class="text-lg font-semibold mb-1">蛇</h3>
+                        <p class="text-light/70 text-xs">2001, 2013, 2025</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="horse">
+                        <div class="text-4xl mb-3 text-accent">🐎</div>
+                        <h3 class="text-lg font-semibold mb-1">马</h3>
+                        <p class="text-light/70 text-xs">2002, 2014, 2026</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="sheep">
+                        <div class="text-4xl mb-3 text-accent">🐑</div>
+                        <h3 class="text-lg font-semibold mb-1">羊</h3>
+                        <p class="text-light/70 text-xs">2003, 2015, 2027</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="monkey">
+                        <div class="text-4xl mb-3 text-accent">🐒</div>
+                        <h3 class="text-lg font-semibold mb-1">猴</h3>
+                        <p class="text-light/70 text-xs">2004, 2016, 2028</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="rooster">
+                        <div class="text-4xl mb-3 text-accent">🐓</div>
+                        <h3 class="text-lg font-semibold mb-1">鸡</h3>
+                        <p class="text-light/70 text-xs">2005, 2017, 2029</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="dog">
+                        <div class="text-4xl mb-3 text-accent">🐕</div>
+                        <h3 class="text-lg font-semibold mb-1">狗</h3>
+                        <p class="text-light/70 text-xs">2006, 2018, 2030</p>
+                    </div>
+                    
+                    <div class="生肖-card bg-dark/30 backdrop-blur-sm rounded-xl p-5 border border-accent/20 text-center cursor-pointer" data-animal="pig">
+                        <div class="text-4xl mb-3 text-accent">🐖</div>
+                        <h3 class="text-lg font-semibold mb-1">猪</h3>
+                        <p class="text-light/70 text-xs">2007, 2019, 2031</p>
+                    </div>
+                </div>
+                
+                <!-- 生肖详情 -->
+                <div id="zodiac-detail" class="mt-16 bg-dark/70 backdrop-blur-md rounded-xl p-8 border border-accent/30 hidden">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/4 text-center">
+                            <div class="text-8xl mb-4 text-accent" id="zodiac-icon">🐀</div>
+                            <h3 class="text-2xl font-bold mb-2" id="zodiac-name">属鼠</h3>
+                            <p class="text-light/60 mb-4" id="zodiac-years">出生年份: 1996, 2008, 2020</p>
+                            <div class="flex justify-center space-x-2">
+                                <span class="inline-block px-3 py-1 bg-primary/40 rounded-full text-xs">机智</span>
+                                <span class="inline-block px-3 py-1 bg-primary/40 rounded-full text-xs">乐观</span>
+                                <span class="inline-block px-3 py-1 bg-primary/40 rounded-full text-xs">适应力强</span>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-3/4">
+                            <h4 class="text-xl font-semibold mb-3 flex items-center">
+                                <i class="fa fa-user text-accent mr-2"></i>性格特点
+                            </h4>
+                            <p class="text-light/80 mb-6" id="zodiac-character">
+                                属鼠的人通常非常聪明，机智灵活，对环境有很强的适应能力。他们乐观开朗，善于交际，在人群中往往很受欢迎。属鼠的人有着敏锐的观察力和判断力，能够快速抓住机会。他们有着强烈的好奇心，喜欢探索新事物，但有时可能会显得有些过于谨慎。
+                            </p>
+                            
+                            <h4 class="text-xl font-semibold mb-3 flex items-center">
+                                <i class="fa fa-heart text-accent mr-2"></i>爱情与婚姻
+                            </h4>
+                            <p class="text-light/80 mb-6" id="zodiac-love">
+                                在爱情方面，属鼠的人通常热情主动，喜欢表达自己的感情。他们对伴侣忠诚体贴，善于营造浪漫的氛围。然而，他们有时可能会过于敏感，对感情要求过高，容易产生猜疑。属鼠的人适合与属龙、属猴和属牛的人相配，这些组合通常能够带来和谐美满的婚姻。
+                            </p>
+                            
+                            <h4 class="text-xl font-semibold mb-3 flex items-center">
+                                <i class="fa fa-briefcase text-accent mr-2"></i>事业与财运
+                            </h4>
+                            <p class="text-light/80 mb-6" id="zodiac-career">
+                                属鼠的人在事业上往往能够取得不错的成就，他们聪明机智，善于应对各种挑战。适合从事需要智慧和创意的工作，如商业、金融、艺术等领域。在财运方面，属鼠的人通常有着良好的理财能力，能够合理规划自己的收支。然而，他们有时可能会过于贪心，需要注意避免冒险投资。
+                            </p>
+                            
+                            <h4 class="text-xl font-semibold mb-3 flex items-center">
+                                <i class="fa fa-lightbulb-o text-accent mr-2"></i>健康与运势
+                            </h4>
+                            <p class="text-light/80" id="zodiac-health">
+                                属鼠的人总体健康状况良好，但需要注意保持良好的生活习惯，避免过度劳累。他们容易受到压力的影响，需要学会放松自己。在运势方面，属鼠的人一生较为平顺，会遇到一些机遇和挑战，但只要保持积极的心态，都能够顺利度过。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 text-right">
+                        <button id="close-zodiac" class="text-accent hover:underline">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section id="about" class="py-20 bg-primary/30 relative">
+            <div class="absolute inset-0 bg-stars opacity-10 pointer-events-none"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold mb-4 text-shadow">关于我们</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto">
+                        探索神秘占卜的世界，寻找内心的指引与平衡
+                    </p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto">
+                    <div class="bg-dark/50 backdrop-blur-sm rounded-xl p-8 border border-accent/20 mb-12">
+                        <h3 class="text-xl font-semibold mb-4">我们的使命</h3>
+                        <p class="text-light/80 mb-4">
+                            神秘占卜致力于通过古老的占卜艺术，帮助人们更好地了解自己，洞察生活中的机遇和挑战。我们相信，每个人都有能力通过内心的智慧和外在的指引，找到属于自己的人生道路。
+                        </p>
+                        <p class="text-light/80">
+                            我们的占卜师团队拥有多年的专业经验，他们怀着敬畏和尊重的态度对待每一次占卜，为客户提供真诚、准确的解读和建议。
+                        </p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h3 class="text-xl font-semibold mb-6">联系我们</h3>
+                        <div class="flex flex-col sm:flex-row justify-center gap-6 mb-8">
+                            <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full bg-dark/50 hover:bg-primary transition-colors duration-300">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full bg-dark/50 hover:bg-primary transition-colors duration-300">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full bg-dark/50 hover:bg-primary transition-colors duration-300">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                            <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full bg-dark/50 hover:bg-primary transition-colors duration-300">
+                                <i class="fa fa-youtube-play"></i>
+                            </a>
+                        </div>
+                        <p class="text-light/70">
+                            如有任何问题或建议，请发送邮件至 <a href="mailto:contact@mysticdivination.com" class="text-accent hover:underline">contact@mysticdivination.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark/80 backdrop-blur-md py-10 border-t border-accent/20">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fa fa-moon-o text-2xl text-accent"></i>
+                        <span class="text-xl font-bold">神秘占卜</span>
+                    </div>
+                    <p class="text-light/60 text-sm">
+                        探索命运的奥秘，寻找内心的指引
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="text-light/60 hover:text-accent transition-colors">首页</a></li>
+                        <li><a href="#tarot" class="text-light/60 hover:text-accent transition-colors">塔罗占卜</a></li>
+                        <li><a href="#horoscope" class="text-light/60 hover:text-accent transition-colors">星座运势</a></li>
+                        <li><a href="#zodiac" class="text-light/60 hover:text-accent transition-colors">生肖命理</a></li>
+                        <li><a href="#about" class="text-light/60 hover:text-accent transition-colors">关于我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">服务</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-light/60 hover:text-accent transition-colors">在线占卜</a></li>
+                        <li><a href="#" class="text-light/60 hover:text-accent transition-colors">私人咨询</a></li>
+                        <li><a href="#" class="text-light/60 hover:text-accent transition-colors">塔罗课程</a></li>
+                        <li><a href="#" class="text-light/60 hover:text-accent transition-colors">星座解读</a></li>
+                        <li><a href="#" class="text-light/60 hover:text-accent transition-colors">生肖分析</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">订阅我们</h4>
+                    <p class="text-light/60 text-sm mb-4">
+                        获取最新的占卜资讯和优惠活动
+                    </p>
+                    <form class="flex">
+                        <input type="email" placeholder="您的邮箱地址" class="px-4 py-2 bg-dark/50 border border-accent/30 rounded-l-lg focus:outline-none focus:border-accent text-light w-full">
+                        <button type="submit" class="bg-accent hover:bg-accent/80 text-dark px-4 py-2 rounded-r-lg transition-colors duration-300">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 text-center text-light/50 text-sm">
+                <p>© 2025 神秘占卜. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-dark/90', 'backdrop-blur-md', 'shadow-lg');
+            } else {
+                navbar.classList.remove('bg-dark/90', 'backdrop-blur-md', 'shadow-lg');
+            }
+        });
+        
+        // 移动端菜单
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuToggle.innerHTML = mobileMenu.classList.contains('hidden') 
+                ? '<i class="fa fa-bars"></i>' 
+                : '<i class="fa fa-times"></i>';
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    menuToggle.innerHTML = '<i class="fa fa-bars"></i>';
+                }
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 塔罗牌功能
+        const drawTarotBtn = document.getElementById('draw-tarot');
+        const tarotResults = document.getElementById('tarot-results');
+        const spreadButtons = document.querySelectorAll('[data-spread]');
+        let currentSpread = 'single';
+        
+        // 塔罗牌数据
+        const tarotCards = [
+            { name: '愚者', image: 'https://picsum.photos/id/100/200/300', description: '代表开始、自由、冒险和无限可能。提醒你要勇于探索未知，保持开放的心态。' },
+            { name: '魔术师', image: 'https://picsum.photos/id/101/200/300', description: '象征创造力、智慧和能力。表示你拥有实现目标的一切资源，只需发挥你的才能。' },
+            { name: '女祭司', image: 'https://picsum.photos/id/102/200/300', description: '代表直觉、神秘和潜意识。暗示你要倾听内心的声音，信任你的直觉。' },
+            { name: '皇后', image: 'https://picsum.photos/id/103/200/300', description: '象征丰饶、美丽和母性。表示你正处于一个充满创造力和生产力的时期。' },
+            { name: '皇帝', image: 'https://picsum.photos/id/104/200/300', description: '代表权威、领导力和秩序。提醒你要承担责任，发挥你的影响力。' },
+            { name: '教皇', image: 'https://picsum.photos/id/105/200/300', description: '象征传统、信仰和精神指导。表示你可能需要寻求他人的建议或指导。' },
+            { name: '恋人', image: 'https://picsum.photos/id/106/200/300', description: '代表选择、关系和平衡。暗示你需要在生活中做出重要的决定，或关注你的人际关系。' },
+            { name: '战车', image: 'https://picsum.photos/id/107/200/300', description: '象征胜利、决心和控制。表示你有能力克服困难，实现你的目标。' },
+            { name: '力量', image: 'https://picsum.photos/id/108/200/300', description: '代表勇气、耐心和内在力量。提醒你要保持冷静和坚韧，面对挑战。' },
+            { name: '隐者', image: 'https://picsum.photos/id/109/200/300', description: '象征独处、反思和智慧。表示你需要花时间内省，寻找内心的答案。' }
+        ];
+        
+        // 切换牌阵
+        spreadButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                spreadButtons.forEach(btn => btn.classList.remove('bg-primary/70', 'active'));
+                spreadButtons.forEach(btn => btn.classList.add('bg-dark/70'));
+                button.classList.remove('bg-dark/70');
+                button.classList.add('bg-primary/70', 'active');
+                currentSpread = button.dataset.spread;
+            });
+        });
+        
+        // 抽取塔罗牌
+        drawTarotBtn.addEventListener('click', () => {
+            tarotResults.innerHTML = '';
+            tarotResults.classList.remove('opacity-0');
+            
+            let cardCount = 1;
+            if (currentSpread === 'three') cardCount = 3;
+            else if (currentSpread === 'celtic') cardCount = 5;
+            
+            // 创建牌背
+            for (let i = 0; i < cardCount; i++) {
+                const cardContainer = document.createElement('div');
+                cardContainer.className = 'relative w-48 h-64 perspective-1000';
+                
+                const card = document.createElement('div');
+                card.className = 'tarot-card relative w-full h-full transform-style-3d cursor-pointer';
+                card.dataset.index = i;
+                
+                const cardFront = document.createElement('div');
+                cardFront.className = 'absolute w-full h-full backface-hidden rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-xl';
+                cardFront.innerHTML = `<i class="fa fa-moon-o text-6xl text-light/80"></i>`;
+                
+                const cardBack = document.createElement('div');
+                cardBack.className = 'absolute w-full h-full backface-hidden rounded-lg bg-light transform rotateY-180 overflow-hidden';
+                
+                card.appendChild(cardFront);
+                card.appendChild(cardBack);
+                cardContainer.appendChild(card);
+                tarotResults.appendChild(cardContainer);
+                
+                // 添加点击翻转效果
+                card.addEventListener('click', function() {
+                    if (!this.classList.contains('flipped')) {
+                        this.classList.add('flipped');
+                        
+                        // 随机选择一张牌
+                        const randomIndex = Math.floor(Math.random() * tarotCards.length);
+                        const selectedCard = tarotCards[randomIndex];
+                        
+                        // 设置牌面内容
+                        cardBack.innerHTML = `
+                            <img src="${selectedCard.image}" alt="${selectedCard.name}" class="w-full h-48 object-cover">
+                            <div class="p-3 bg-dark">
+                                <h3 class="font-semibold text-accent">${selectedCard.name}</h3>
+                                <p class="text-xs text-light/70 mt-1">${selectedCard.description}</p>
+                            </div>
+                        `;
+                    }
+                });
+            }
+        });
+        
+        // 星座运势功能
+        const horoscopeButtons = document.querySelectorAll('[data-sign]');
+        const horoscopeDetail = document.getElementById('horoscope-detail');
+        const closeHoroscopeBtn = document.getElementById('close-horoscope');
+        const horoscopeTitle = document.getElementById('horoscope-title');
+        const horoscopeDate = document.getElementById('horoscope-date');
+        const horoscopeSign = document.getElementById('horoscope-sign');
+        const horoscopeContent = document.getElementById('horoscope-content');
+        
+        // 星座数据
+        const horoscopeData = {
+            aries: {
+                title: '白羊座今日运势',
+                sign: '♈',
+                content: '今日白羊座的整体运势较为顺畅，在爱情方面会有新的机会出现，可能会遇到让你心动的人。在事业上，虽然会面临一些挑战，但只要你保持积极的态度和坚定的信念，都能够克服困难。财运方面，适合稳健投资，避免冒险行为。健康方面，要注意保持良好的作息习惯，避免过度劳累。'
+            },
+            taurus: {
+                title: '金牛座今日运势',
+                sign: '♉',
+                content: '今日金牛座的运势较为平稳，爱情上可能会有一些小的摩擦，需要多沟通和理解。事业上会有一些新的想法和计划，但实施起来可能需要一些时间和耐心。财运方面，要注意合理规划开支，避免不必要的消费。健康方面，要注意饮食卫生，避免肠胃不适。'
+            },
+            gemini: {
+                title: '双子座今日运势',
+                sign: '♊',
+                content: '今日双子座的运势不错，爱情上会有一些浪漫的惊喜，单身者有机会遇到心仪的对象。事业上思维活跃，能够提出一些创新的想法，得到同事和上司的认可。财运方面，有一些意外之财的机会，但要注意把握分寸，不要贪心。健康方面，要注意休息，避免过度疲劳。'
+            },
+            cancer: {
+                title: '巨蟹座今日运势',
+                sign: '♋',
+                content: '今日巨蟹座的运势较为温和，爱情上要多关心家人和伴侣，给予他们更多的陪伴和支持。事业上会有一些小的压力，需要调整好心态，积极面对。财运方面，要注意理财，避免盲目投资。健康方面，要注意情绪调节，避免过度焦虑。'
+            },
+            leo: {
+                title: '狮子座今日运势',
+                sign: '♌',
+                content: '今日狮子座的运势较好，爱情上会有一些进展，与伴侣的关系更加亲密。事业上会有一些展示自己的机会，要勇于表现，发挥自己的才能。财运方面，有一些偏财运的机会，但要注意把握时机。健康方面，要注意保持良好的心态，避免过度自负。'
+            },
+            virgo: {
+                title: '处女座今日运势',
+                sign: '♍',
+                content: '今日处女座的运势较为平淡，爱情上要多主动一些，不要过于挑剔。事业上会有一些琐碎的事情需要处理，要保持耐心和细心。财运方面，要注意节约开支，避免浪费。健康方面，要注意饮食规律，避免暴饮暴食。'
+            },
+            libra: {
+                title: '天秤座今日运势',
+                sign: '♎',
+                content: '今日天秤座的运势不错，爱情上会有一些浪漫的约会和活动，与伴侣的感情升温。事业上会有一些合作的机会，要善于与人沟通和协作。财运方面，有一些意外之财的机会，但要注意合理规划。健康方面，要注意保持良好的体态，避免久坐不动。'
+            },
+            scorpio: {
+                title: '天蝎座今日运势',
+                sign: '♏',
+                content: '今日天蝎座的运势较为复杂，爱情上要多信任伴侣，不要过于猜疑。事业上会有一些挑战和竞争，要保持冷静和理智，不要轻易放弃。财运方面，要注意理财，避免盲目跟风投资。健康方面，要注意休息，避免过度劳累。'
+            },
+            sagittarius: {
+                title: '射手座今日运势',
+                sign: '♐',
+                content: '今日射手座的运势较好，爱情上会有一些新的机会出现，要积极主动一些。事业上会有一些突破和进展，能够得到上司的认可和奖励。财运方面，有一些偏财运的机会，但要注意把握分寸，不要贪心。健康方面，要注意适量运动，保持良好的身体状态。'
+            },
+            capricorn: {
+                title: '摩羯座今日运势',
+                sign: '♑',
+                content: '今日摩羯座的运势较为平稳，爱情上要多关心伴侣，给予他们更多的温暖和支持。事业上会有一些压力和挑战，需要调整好心态，积极面对。财运方面，要注意合理规划开支，避免不必要的消费。健康方面，要注意休息，避免过度劳累。'
+            },
+            aquarius: {
+                title: '水瓶座今日运势',
+                sign: '♒',
+                content: '今日水瓶座的运势不错，爱情上会有一些浪漫的惊喜和感动，与伴侣的关系更加融洽。事业上会有一些新的想法和创意，能够得到同事和上司的认可。财运方面，有一些意外之财的机会，但要注意把握时机。健康方面，要注意保持良好的心态，避免情绪波动过大。'
+            },
+            pisces: {
+                title: '双鱼座今日运势',
+                sign: '♓',
+                content: '今日双鱼座的运势较为温和，爱情上要多表达自己的感受和想法，不要过于含蓄。事业上会有一些小的挫折和困难，需要调整好心态，积极面对。财运方面，要注意理财，避免盲目投资。健康方面，要注意休息，避免过度疲劳。'
+            }
+        };
+        
+        // 显示星座详情
+        horoscopeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const sign = button.dataset.sign;
+                const data = horoscopeData[sign];
+                
+                if (data) {
+                    horoscopeTitle.textContent = data.title;
+                    horoscopeSign.textContent = data.sign;
+                    horoscopeContent.textContent = data.content;
+                    
+                    // 设置日期
+                    const today = new Date();
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    horoscopeDate.textContent = today.toLocaleDateString('zh-CN', options);
+                    
+                    horoscopeDetail.classList.remove('hidden');
+                    // 添加淡入动画
+                    setTimeout(() => {
+                        horoscopeDetail.classList.add('animate-fadeIn');
+                    }, 10);
+                }
+            });
+        });
+        
+        // 关闭星座详情
+        closeHoroscopeBtn.addEventListener('click', () => {
+            horoscopeDetail.classList.add('hidden');
+            horoscopeDetail.classList.remove('animate-fadeIn');
+        });
+        
+        // 生肖功能
+        const zodiacCards = document.querySelectorAll('.生肖-card');
+        const zodiacDetail = document.getElementById('zodiac-detail');
+        const closeZodiacBtn = document.getElementById('close-zodiac');
+        const zodiacIcon = document.getElementById('zodiac-icon');
+        const zodiacName = document.getElementById('zodiac-name');
+        const zodiacYears = document.getElementById('zodiac-years');
+        const zodiacCharacter = document.getElementById('zodiac-character');
+        const zodiacLove = document.getElementById('zodiac-love');
+        const zodiacCareer = document.getElementById('zodiac-career');
+        const zodiacHealth = document.getElementById('zodiac-health');
+        
+        // 生肖数据
+        const zodiacData = {
+            rat: {
+                icon: '🐀',
+                name: '属鼠',
+                years: '出生年份: 1996, 2008, 2020',
+                character: '属鼠的人通常非常聪明，机智灵活，对环境有很强的适应能力。他们乐观开朗，善于交际，在人群中往往很受欢迎。属鼠的人有着敏锐的观察力和判断力，能够快速抓住机会。他们有着强烈的好奇心，喜欢探索新事物，但有时可能会显得有些过于谨慎。',
+                love: '在爱情方面，属鼠的人通常热情主动，喜欢表达自己的感情。他们对伴侣忠诚体贴，善于营造浪漫的氛围。然而，他们有时可能会过于敏感，对感情要求过高，容易产生猜疑。属鼠的人适合与属龙、属猴和属牛的人相配，这些组合通常能够带来和谐美满的婚姻。',
+                career: '属鼠的人在事业上往往能够取得不错的成就，他们聪明机智，善于应对各种挑战。适合从事需要智慧和创意的工作，如商业、金融、艺术等领域。在财运方面，属鼠的人通常有着良好的理财能力，能够合理规划自己的收支。然而，他们有时可能会过于贪心，需要注意避免冒险投资。',
+                health: '属鼠的人总体健康状况良好，但需要注意保持良好的生活习惯，避免过度劳累。他们容易受到压力的影响，需要学会放松自己。在运势方面，属鼠的人一生较为平顺，会遇到一些机遇和挑战，但只要保持积极的心态，都能够顺利度过。'
+            },
+            ox: {
+                icon: '🐂',
+                name: '属牛',
+                years: '出生年份: 1997, 2009, 2021',
+                character: '属牛的人通常踏实稳重，有耐心和毅力，做事认真负责。他们为人正直，诚实守信，值得信赖。属牛的人有着坚定的信念和目标，一旦确定就会坚持不懈地追求。他们不喜欢冒险，喜欢稳定的生活和工作环境，但有时可能会显得有些固执。',
+                love: '在爱情方面，属牛的人通常忠诚专一，对伴侣体贴入微。他们不善于表达自己的感情，但会用实际行动来证明自己的爱。属牛的人对待婚姻非常认真，会努力营造一个温馨和睦的家庭。他们适合与属鼠、属蛇和属鸡的人相配，这些组合通常能够带来稳定幸福的婚姻。',
+                career: '属牛的人在事业上通常能够取得不错的成就，他们踏实肯干，有责任心，能够承担重要的工作任务。适合从事需要耐心和细心的工作，如教育、医疗、金融等领域。在财运方面，属牛的人通常比较保守，喜欢稳健的投资方式。他们注重储蓄，能够积累一定的财富。',
+                health: '属牛的人总体健康状况良好，但需要注意保持良好的饮食习惯，避免过度饮酒和吸烟。他们容易受到关节疼痛和消化系统问题的困扰，需要注意适当运动和饮食调理。在运势方面，属牛的人一生较为平稳，会遇到一些小的挫折和困难，但只要保持积极的心态，都能够顺利度过。'
+            },
+            tiger: {
+                icon: '🐅',
+                name: '属虎',
+                years: '出生年份: 1998, 2010, 2022',
+                character: '属虎的人通常勇敢自信，富有领导力和决断力。他们热情开朗，喜欢冒险和挑战，对新鲜事物充满好奇心。属虎的人有着强烈的自尊心和自信心，不喜欢被别人控制和束缚。他们有着远大的理想和抱负，渴望在事业上取得成功，但有时可能会显得有些冲动。',
+                love: '在爱情方面，属虎的人通常热情奔放，喜欢表达自己的感情。他们对伴侣忠诚专一，但有时可能会过于强势，需要学会尊重对方的意见和感受。属虎的人对待婚姻非常认真，会努力营造一个充满活力和激情的家庭。他们适合与属马、属狗和属猪的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属虎的人在事业上通常能够取得不错的成就，他们勇敢果断，有领导力，能够带领团队完成重要的任务。适合从事需要勇气和创新的工作，如企业管理、政治、艺术等领域。在财运方面，属虎的人通常比较慷慨，喜欢享受生活。他们有着较强的赚钱能力，但有时可能会因为过于冲动而做出错误的投资决策。',
+                health: '属虎的人总体健康状况良好，但需要注意保持良好的心态，避免过度焦虑和压力。他们容易受到心血管疾病和呼吸系统问题的困扰，需要注意适当运动和饮食调理。在运势方面，属虎的人一生较为起伏，会遇到一些大的机遇和挑战，但只要保持积极的心态，都能够抓住机会，取得成功。'
+            },
+            rabbit: {
+                icon: '🐇',
+                name: '属兔',
+                years: '出生年份: 1999, 2011, 2023',
+                character: '属兔的人通常温和善良，乐观开朗，为人正直，待人友善。他们有着敏锐的观察力和判断力，能够快速适应环境的变化。属兔的人有着丰富的想象力和创造力，喜欢艺术和文学。他们不喜欢争斗，喜欢和平和谐的生活环境，但有时可能会显得有些优柔寡断。',
+                love: '在爱情方面，属兔的人通常温柔体贴，对伴侣关怀备至。他们不善于表达自己的感情，但会用实际行动来证明自己的爱。属兔的人对待婚姻非常认真，会努力营造一个温馨和睦的家庭。他们适合与属羊、属狗和属猪的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属兔的人在事业上通常能够取得不错的成就，他们温和善良，有亲和力，能够与同事和上司相处融洽。适合从事需要耐心和细心的工作，如教育、医疗、艺术等领域。在财运方面，属兔的人通常比较谨慎，喜欢稳健的投资方式。他们注重储蓄，能够积累一定的财富。',
+                health: '属兔的人总体健康状况良好，但需要注意保持良好的饮食习惯，避免过度饮酒和吸烟。他们容易受到消化系统问题和皮肤病的困扰，需要注意适当运动和饮食调理。在运势方面，属兔的人一生较为平顺，会遇到一些小的挫折和困难，但只要保持积极的心态，都能够顺利度过。'
+            },
+            dragon: {
+                icon: '🐉',
+                name: '属龙',
+                years: '出生年份: 2000, 2012, 2024',
+                character: '属龙的人通常自信满满，富有创造力和想象力。他们有着远大的理想和抱负，渴望在事业上取得成功。属龙的人有着强烈的领导能力和决断力，能够带领团队完成重要的任务。他们不喜欢被别人控制和束缚，喜欢自由独立的生活方式，但有时可能会显得有些傲慢。',
+                love: '在爱情方面，属龙的人通常热情奔放，喜欢表达自己的感情。他们对伴侣忠诚专一，但有时可能会过于自我中心，需要学会关心和体贴对方。属龙的人对待婚姻非常认真，会努力营造一个充满活力和激情的家庭。他们适合与属鼠、属猴和属鸡的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属龙的人在事业上通常能够取得不错的成就，他们自信满满，有创造力，能够提出一些创新的想法和解决方案。适合从事需要领导力和创新的工作，如企业管理、政治、科技等领域。在财运方面，属龙的人通常比较慷慨，喜欢享受生活。他们有着较强的赚钱能力，但有时可能会因为过于冲动而做出错误的投资决策。',
+                health: '属龙的人总体健康状况良好，但需要注意保持良好的心态，避免过度焦虑和压力。他们容易受到心血管疾病和神经系统问题的困扰，需要注意适当运动和饮食调理。在运势方面，属龙的人一生较为起伏，会遇到一些大的机遇和挑战，但只要保持积极的心态，都能够抓住机会，取得成功。'
+            },
+            snake: {
+                icon: '🐍',
+                name: '属蛇',
+                years: '出生年份: 2001, 2013, 2025',
+                character: '属蛇的人通常聪明机智，富有洞察力和判断力。他们有着神秘的气质和深邃的思想，喜欢思考和探索人生的意义。属蛇的人有着强烈的好奇心和求知欲，喜欢学习和研究新事物。他们不喜欢张扬，喜欢低调的生活方式，但有时可能会显得有些冷漠。',
+                love: '在爱情方面，属蛇的人通常含蓄内敛，不善于表达自己的感情。他们对伴侣忠诚专一，但有时可能会过于敏感，需要学会信任和理解对方。属蛇的人对待婚姻非常认真，会努力营造一个稳定和谐的家庭。他们适合与属龙、属鸡和属牛的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属蛇的人在事业上通常能够取得不错的成就，他们聪明机智，有洞察力，能够准确地把握市场趋势和机会。适合从事需要智慧和分析能力的工作，如金融、科研、法律等领域。在财运方面，属蛇的人通常比较谨慎，喜欢稳健的投资方式。他们注重储蓄，能够积累一定的财富。',
+                health: '属蛇的人总体健康状况良好，但需要注意保持良好的饮食习惯，避免过度饮酒和吸烟。他们容易受到内分泌系统问题和皮肤病的困扰，需要注意适当运动和饮食调理。在运势方面，属蛇的人一生较为平顺，会遇到一些小的挫折和困难，但只要保持积极的心态，都能够顺利度过。'
+            },
+            horse: {
+                icon: '🐎',
+                name: '属马',
+                years: '出生年份: 2002, 2014, 2026',
+                character: '属马的人通常活力充沛，热情开朗，喜欢自由和冒险。他们有着强烈的好奇心和求知欲，喜欢探索新事物和新环境。属马的人有着敏捷的思维和快速的反应能力，能够迅速适应环境的变化。他们不喜欢被别人控制和束缚，喜欢自由独立的生活方式，但有时可能会显得有些鲁莽。',
+                love: '在爱情方面，属马的人通常热情奔放，喜欢表达自己的感情。他们对伴侣忠诚专一，但有时可能会过于自我中心，需要学会关心和体贴对方。属马的人对待婚姻非常认真，会努力营造一个充满活力和激情的家庭。他们适合与属虎、属狗和属羊的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属马的人在事业上通常能够取得不错的成就，他们活力充沛，有创造力，能够提出一些创新的想法和解决方案。适合从事需要活力和创新的工作，如销售、市场营销、旅游等领域。在财运方面，属马的人通常比较慷慨，喜欢享受生活。他们有着较强的赚钱能力，但有时可能会因为过于冲动而做出错误的投资决策。',
+                health: '属马的人总体健康状况良好，但需要注意保持良好的心态，避免过度焦虑和压力。他们容易受到心血管疾病和运动系统问题的困扰，需要注意适当运动和饮食调理。在运势方面，属马的人一生较为起伏，会遇到一些大的机遇和挑战，但只要保持积极的心态，都能够抓住机会，取得成功。'
+            },
+            sheep: {
+                icon: '🐑',
+                name: '属羊',
+                years: '出生年份: 2003, 2015, 2027',
+                character: '属羊的人通常温和善良，乐观开朗，为人正直，待人友善。他们有着丰富的想象力和创造力，喜欢艺术和文学。属羊的人有着敏锐的观察力和判断力，能够快速适应环境的变化。他们不喜欢争斗，喜欢和平和谐的生活环境，但有时可能会显得有些脆弱。',
+                love: '在爱情方面，属羊的人通常温柔体贴，对伴侣关怀备至。他们不善于表达自己的感情，但会用实际行动来证明自己的爱。属羊的人对待婚姻非常认真，会努力营造一个温馨和睦的家庭。他们适合与属兔、属马和属猪的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属羊的人在事业上通常能够取得不错的成就，他们温和善良，有亲和力，能够与同事和上司相处融洽。适合从事需要耐心和细心的工作，如教育、医疗、艺术等领域。在财运方面，属羊的人通常比较谨慎，喜欢稳健的投资方式。他们注重储蓄，能够积累一定的财富。',
+                health: '属羊的人总体健康状况良好，但需要注意保持良好的饮食习惯，避免过度饮酒和吸烟。他们容易受到消化系统问题和呼吸系统问题的困扰，需要注意适当运动和饮食调理。在运势方面，属羊的人一生较为平顺，会遇到一些小的挫折和困难，但只要保持积极的心态，都能够顺利度过。'
+            },
+            monkey: {
+                icon: '🐒',
+                name: '属猴',
+                years: '出生年份: 2004, 2016, 2028',
+                character: '属猴的人通常聪明机智，活泼好动，喜欢开玩笑和幽默。他们有着强烈的好奇心和求知欲，喜欢学习和研究新事物。属猴的人有着敏捷的思维和快速的反应能力，能够迅速适应环境的变化。他们不喜欢被别人控制和束缚，喜欢自由独立的生活方式，但有时可能会显得有些调皮。',
+                love: '在爱情方面，属猴的人通常热情奔放，喜欢表达自己的感情。他们对伴侣忠诚专一，但有时可能会过于花心，需要学会专注和忠诚。属猴的人对待婚姻非常认真，会努力营造一个充满活力和激情的家庭。他们适合与属鼠、属龙和属蛇的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属猴的人在事业上通常能够取得不错的成就，他们聪明机智，有创造力，能够提出一些创新的想法和解决方案。适合从事需要智慧和创新的工作，如科技、金融、艺术等领域。在财运方面，属猴的人通常比较灵活，喜欢尝试新的投资方式。他们有着较强的赚钱能力，但有时可能会因为过于贪心而做出错误的投资决策。',
+                health: '属猴的人总体健康状况良好，但需要注意保持良好的心态，避免过度焦虑和压力。他们容易受到神经系统问题和运动系统问题的困扰，需要注意适当运动和饮食调理。在运势方面，属猴的人一生较为起伏，会遇到一些大的机遇和挑战，但只要保持积极的心态，都能够抓住机会，取得成功。'
+            },
+            rooster: {
+                icon: '🐓',
+                name: '属鸡',
+                years: '出生年份: 2005, 2017, 2029',
+                character: '属鸡的人通常自信满满，追求完美，喜欢表现自己。他们有着敏锐的观察力和判断力，能够准确地把握事物的本质。属鸡的人有着强烈的责任心和使命感，喜欢承担重要的工作任务。他们不喜欢被别人批评和指责，喜欢听到别人的赞美和认可，但有时可能会显得有些自负。',
+                love: '在爱情方面，属鸡的人通常热情奔放，喜欢表达自己的感情。他们对伴侣忠诚专一，但有时可能会过于挑剔，需要学会包容和理解对方。属鸡的人对待婚姻非常认真，会努力营造一个稳定和谐的家庭。他们适合与属龙、属蛇和属牛的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属鸡的人在事业上通常能够取得不错的成就，他们自信满满，有责任心，能够承担重要的工作任务。适合从事需要责任心和执行力的工作，如管理、教育、医疗等领域。在财运方面，属鸡的人通常比较谨慎，喜欢稳健的投资方式。他们注重储蓄，能够积累一定的财富。',
+                health: '属鸡的人总体健康状况良好，但需要注意保持良好的饮食习惯，避免过度饮酒和吸烟。他们容易受到心血管疾病和内分泌系统问题的困扰，需要注意适当运动和饮食调理。在运势方面，属鸡的人一生较为平顺，会遇到一些小的挫折和困难，但只要保持积极的心态，都能够顺利度过。'
+            },
+            dog: {
+                icon: '🐕',
+                name: '属狗',
+                years: '出生年份: 2006, 2018, 2030',
+                character: '属狗的人通常忠诚正直，诚实守信，为人友善，待人真诚。他们有着强烈的责任心和使命感，喜欢帮助别人解决问题。属狗的人有着敏锐的观察力和判断力，能够准确地把握事物的本质。他们不喜欢虚伪和欺骗，喜欢真实和坦诚的人际关系，但有时可能会显得有些固执。',
+                love: '在爱情方面，属狗的人通常忠诚专一，对伴侣体贴入微。他们不善于表达自己的感情，但会用实际行动来证明自己的爱。属狗的人对待婚姻非常认真，会努力营造一个温馨和睦的家庭。他们适合与属虎、属兔和属马的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属狗的人在事业上通常能够取得不错的成就，他们忠诚正直，有责任心，能够承担重要的工作任务。适合从事需要责任心和执行力的工作，如警察、军人、教师等领域。在财运方面，属狗的人通常比较谨慎，喜欢稳健的投资方式。他们注重储蓄，能够积累一定的财富。',
+                health: '属狗的人总体健康状况良好，但需要注意保持良好的心态，避免过度焦虑和压力。他们容易受到消化系统问题和呼吸系统问题的困扰，需要注意适当运动和饮食调理。在运势方面，属狗的人一生较为平顺，会遇到一些小的挫折和困难，但只要保持积极的心态，都能够顺利度过。'
+            },
+            pig: {
+                icon: '🐖',
+                name: '属猪',
+                years: '出生年份: 2007, 2019, 2031',
+                character: '属猪的人通常温和善良，乐观开朗，为人正直，待人友善。他们有着丰富的想象力和创造力，喜欢艺术和文学。属猪的人有着敏锐的观察力和判断力，能够快速适应环境的变化。他们不喜欢争斗，喜欢和平和谐的生活环境，但有时可能会显得有些懒惰。',
+                love: '在爱情方面，属猪的人通常温柔体贴，对伴侣关怀备至。他们不善于表达自己的感情，但会用实际行动来证明自己的爱。属猪的人对待婚姻非常认真，会努力营造一个温馨和睦的家庭。他们适合与属虎、属兔和属羊的人相配，这些组合通常能够带来幸福美满的婚姻。',
+                career: '属猪的人在事业上通常能够取得不错的成就，他们温和善良，有亲和力，能够与同事和上司相处融洽。适合从事需要耐心和细心的工作，如教育、医疗、艺术等领域。在财运方面，属猪的人通常比较谨慎，喜欢稳健的投资方式。他们注重储蓄，能够积累一定的财富。',
+                health: '属猪的人总体健康状况良好，但需要注意保持良好的饮食习惯，避免过度饮酒和吸烟。他们容易受到消化系统问题和皮肤病的困扰，需要注意适当运动和饮食调理。在运势方面，属猪的人一生较为平顺，会遇到一些小的挫折和困难，但只要保持积极的心态，都能够顺利度过。'
+            }
+        };
+        
+        // 显示生肖详情
+        zodiacCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const animal = card.dataset.animal;
+                const data = zodiacData[animal];
+                
+                if (data) {
+                    zodiacIcon.textContent = data.icon;
+                    zodiacName.textContent = data.name;
+                    zodiacYears.textContent = data.years;
+                    zodiacCharacter.textContent = data.character;
+                    zodiacLove.textContent = data.love;
+                    zodiacCareer.textContent = data.career;
+                    zodiacHealth.textContent = data.health;
+                    
+                    zodiacDetail.classList.remove('hidden');
+                    // 添加淡入动画
+                    setTimeout(() => {
+                        zodiacDetail.classList.add('animate-fadeIn');
+                    }, 10);
+                }
+            });
+        });
+        
+        // 关闭生肖详情
+        closeZodiacBtn.addEventListener('click', () => {
+            zodiacDetail.classList.add('hidden');
+            zodiacDetail.classList.remove('animate-fadeIn');
+        });
+        
+        // 添加动画类
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fadeIn {
+                    animation: fadeIn 0.5s ease forwards;
+                }
+            </style>
+        `);
+    </script>
+</body>
+</html>
+    
