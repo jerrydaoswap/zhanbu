@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神秘占卜 | 探索命运的奥秘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5B21B6',
+                        secondary: '#8B5CF6',
+                        accent: '#C084FC',
+                        dark: '#1E1B4B',
+                        light: '#F5F3FF',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow-lg { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); }
+            .bg-stars {
+                background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+                background-size: 50px 50px;
+            }
+            .horoscope-card:hover { transform: scale(1.03); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+            .生肖-card:hover { background-color: rgba(139, 92, 246, 0.1); }
+            .btn-purple { @apply bg-primary hover:bg-secondary text-white font-medium py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1; }
+            .nav-link { @apply relative px-4 py-2 text-light hover:text-accent transition-colors duration-300; }
+            .nav-link::after { content: ''; @apply absolute w-0 h-0.5 bg-accent bottom-0 left-0 transition-all duration-300; }
+            .nav-link:hover::after { @apply w-full; }
+            
+            /* -- 升级后的塔罗牌样式 -- */
+            .tarot-card-container { perspective: 1000px; }
+            .tarot-card {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* 优化翻转动画曲线 */
+                transform-style: preserve-3d;
+            }
+            .tarot-card.flipped { transform: rotateY(180deg); }
+            .tarot-card-front, .tarot-card-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                border-radius: 0.75rem; /* 更圆润的边角 */
+                overflow: hidden;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.3); /* 增加立体感阴影 */
+            }
+            .tarot-card-back { transform: rotateY(180deg); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-dark to-primary min-h-screen text-light overflow-x-hidden">
+    <!-- 星空背景 -->
+    <div class="fixed inset-0 bg-stars opacity-20 pointer-events-none"></div>
+    
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="navbar">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#home" class="flex items-center space-x-2">
+                <i class="fa fa-moon-o text-2xl text-accent"></i>
+                <span class="text-xl font-bold">神秘占卜</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#home" class="nav-link">首页</a>
+                <a href="#tarot" class="nav-link">塔罗占卜</a>
+                <a href="#horoscope" class="nav-link">星座运势</a>
+                <a href="#zodiac" class="nav-link">生肖命理</a>
+                <a href="#about" class="nav-link">关于我们</a>
+            </nav>
+            <button class="md:hidden text-2xl" id="menu-toggle"><i class="fa fa-bars"></i></button>
+        </div>
+        <div class="md:hidden bg-dark/90 backdrop-blur-md hidden" id="mobile-menu">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#home" class="text-light hover:text-accent py-2 border-b border-gray-700">首页</a>
+                <a href="#tarot" class="text-light hover:text-accent py-2 border-b border-gray-700">塔罗占卜</a>
+                <a href="#horoscope" class="text-light hover:text-accent py-2 border-b border-gray-700">星座运势</a>
+                <a href="#zodiac" class="text-light hover:text-accent py-2 border-b border-gray-700">生肖命理</a>
+                <a href="#about" class="text-light hover:text-accent py-2">关于我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容 -->
+    <main class="pt-24 pb-16">
+        <!-- 英雄区域 -->
+        <section id="home" class="relative min-h-[80vh] flex items-center justify-center text-center">
+            <div class="absolute inset-0 bg-gradient-to-b from-dark/70 to-primary/70"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <h1 class="text-[clamp(2.5rem,6vw,4.5rem)] font-bold mb-6 leading-tight text-shadow-lg">探索命运的<span class="text-accent">奥秘</span></h1>
+                <p class="text-[clamp(1rem,2vw,1.25rem)] max-w-2xl mx-auto mb-10 text-light/90">通过古老的占卜艺术，洞察过去、现在与未来，寻找内心的指引与答案</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#tarot" class="btn-purple">塔罗占卜</a>
+                    <a href="#horoscope" class="btn-purple bg-secondary/80 hover:bg-secondary">星座运势</a>
+                    <a href="#zodiac" class="btn-purple bg-secondary/60 hover:bg-secondary/80">生肖命理</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 塔罗占卜 -->
+        <section id="tarot" class="py-20 bg-dark/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4">塔罗占卜</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto">集中精神，想着你的问题，然后点击下方按钮开始抽牌</p>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex justify-center gap-4 mb-8">
+                        <button class="bg-primary px-5 py-2 rounded-full transition" data-spread="single">单张牌</button>
+                        <button class="bg-dark/70 hover:bg-primary/70 px-5 py-2 rounded-full transition" data-spread="three">三张牌</button>
+                    </div>
+                    <div class="text-center mb-8">
+                        <button id="draw-tarot" class="btn-purple"><i class="fa fa-random mr-2"></i>抽取塔罗牌</button>
+                    </div>
+                    <div id="tarot-results" class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center mt-12 min-h-[380px]">
+                        <!-- 塔罗牌结果将显示在此处 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 星座运势 (保持原样) -->
+        <section id="horoscope" class="py-20 bg-primary/30">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4">星座运势</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto">选择你的星座，查看不同年份的运势走向</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="aries"><div class="text-4xl mb-3 text-accent">♈</div><h3 class="text-xl font-semibold mb-2">白羊座</h3><p class="text-light/70 text-sm mb-4">3/21-4/19</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="taurus"><div class="text-4xl mb-3 text-accent">♉</div><h3 class="text-xl font-semibold mb-2">金牛座</h3><p class="text-light/70 text-sm mb-4">4/20-5/20</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="gemini"><div class="text-4xl mb-3 text-accent">♊</div><h3 class="text-xl font-semibold mb-2">双子座</h3><p class="text-light/70 text-sm mb-4">5/21-6/20</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="cancer"><div class="text-4xl mb-3 text-accent">♋</div><h3 class="text-xl font-semibold mb-2">巨蟹座</h3><p class="text-light/70 text-sm mb-4">6/21-7/22</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="leo"><div class="text-4xl mb-3 text-accent">♌</div><h3 class="text-xl font-semibold mb-2">狮子座</h3><p class="text-light/70 text-sm mb-4">7/23-8/22</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="virgo"><div class="text-4xl mb-3 text-accent">♍</div><h3 class="text-xl font-semibold mb-2">处女座</h3><p class="text-light/70 text-sm mb-4">8/23-9/22</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="libra"><div class="text-4xl mb-3 text-accent">♎</div><h3 class="text-xl font-semibold mb-2">天秤座</h3><p class="text-light/70 text-sm mb-4">9/23-10/22</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="scorpio"><div class="text-4xl mb-3 text-accent">♏</div><h3 class="text-xl font-semibold mb-2">天蝎座</h3><p class="text-light/70 text-sm mb-4">10/23-11/21</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="sagittarius"><div class="text-4xl mb-3 text-accent">♐</div><h3 class="text-xl font-semibold mb-2">射手座</h3><p class="text-light/70 text-sm mb-4">11/22-12/21</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="capricorn"><div class="text-4xl mb-3 text-accent">♑</div><h3 class="text-xl font-semibold mb-2">摩羯座</h3><p class="text-light/70 text-sm mb-4">12/22-1/19</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="aquarius"><div class="text-4xl mb-3 text-accent">♒</div><h3 class="text-xl font-semibold mb-2">水瓶座</h3><p class="text-light/70 text-sm mb-4">1/20-2/18</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="pisces"><div class="text-4xl mb-3 text-accent">♓</div><h3 class="text-xl font-semibold mb-2">双鱼座</h3><p class="text-light/70 text-sm mb-4">2/19-3/20</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                </div>
+                <div id="horoscope-detail" class="mt-16 bg-dark/70 backdrop-blur-md rounded-xl p-8 border border-accent/30 hidden">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex items-center gap-4">
+                            <h3 class="text-2xl font-bold" id="horoscope-title">白羊座运势</h3>
+                            <select id="horoscope-year-selector" class="bg-primary/50 border border-accent/30 rounded-md px-2 py-1 text-light focus:outline-none"></select>
+                        </div>
+                        <div class="text-5xl text-accent" id="horoscope-sign">♈</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8" id="horoscope-indexes"></div>
+                    <div class="bg-primary/20 p-6 rounded-lg">
+                        <h4 class="font-semibold mb-3">综合运势</h4>
+                        <p class="text-light/80" id="horoscope-content"></p>
+                    </div>
+                    <div class="mt-6 text-right">
+                        <button id="close-horoscope" class="text-accent hover:underline">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 生肖命理 (保持原样) -->
+        <section id="zodiac" class="py-20 bg-dark/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4">生肖命理</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto">点击你的生肖，查看性格特点和基于“纳音五行”的流年解析</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="rat"><div class="text-4xl mb-3 text-accent">🐀</div><h3 class="text-lg font-semibold">鼠</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="ox"><div class="text-4xl mb-3 text-accent">🐂</div><h3 class="text-lg font-semibold">牛</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="tiger"><div class="text-4xl mb-3 text-accent">🐅</div><h3 class="text-lg font-semibold">虎</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="rabbit"><div class="text-4xl mb-3 text-accent">🐇</div><h3 class="text-lg font-semibold">兔</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="dragon"><div class="text-4xl mb-3 text-accent">🐉</div><h3 class="text-lg font-semibold">龙</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="snake"><div class="text-4xl mb-3 text-accent">🐍</div><h3 class="text-lg font-semibold">蛇</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="horse"><div class="text-4xl mb-3 text-accent">🐎</div><h3 class="text-lg font-semibold">马</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="sheep"><div class="text-4xl mb-3 text-accent">🐑</div><h3 class="text-lg font-semibold">羊</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="monkey"><div class="text-4xl mb-3 text-accent">🐒</div><h3 class="text-lg font-semibold">猴</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="rooster"><div class="text-4xl mb-3 text-accent">🐓</div><h3 class="text-lg font-semibold">鸡</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="dog"><div class="text-4xl mb-3 text-accent">🐕</div><h3 class="text-lg font-semibold">狗</h3></div>
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="pig"><div class="text-4xl mb-3 text-accent">🐖</div><h3 class="text-lg font-semibold">猪</h3></div>
+                </div>
+                <div id="zodiac-detail" class="mt-16 bg-dark/70 backdrop-blur-md rounded-xl p-8 border border-accent/30 hidden">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/4 text-center">
+                            <div class="text-8xl mb-4 text-accent" id="zodiac-icon">🐀</div>
+                            <h3 class="text-2xl font-bold mb-2" id="zodiac-name">属鼠</h3>
+                        </div>
+                        <div class="md:w-3/4">
+                            <div id="zodiac-static-content">
+                                <h4 class="text-xl font-semibold mb-3">性格特点</h4>
+                                <p class="text-light/80 mb-6" id="zodiac-character"></p>
+                                <h4 class="text-xl font-semibold mb-3">爱情与婚姻</h4>
+                                <p class="text-light/80" id="zodiac-love"></p>
+                            </div>
+                            <div class="mt-8 pt-6 border-t border-accent/20" id="zodiac-nayin-content">
+                                <div class="flex items-center gap-4 mb-4">
+                                     <h4 class="text-xl font-semibold">流年纳音解析</h4>
+                                     <select id="zodiac-year-selector" class="bg-primary/50 border border-accent/30 rounded-md px-2 py-1 text-light focus:outline-none"></select>
+                                </div>
+                                <p class="text-light/80" id="zodiac-nayin-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-right">
+                        <button id="close-zodiac" class="text-accent hover:underline">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我们 & 页脚 -->
+        <section id="about" class="py-20 bg-primary/30">
+             <div class="container mx-auto px-4 text-center">
+                 <h2 class="text-4xl font-bold mb-4">关于我们</h2>
+                 <p class="text-light/80 max-w-2xl mx-auto">我们致力于通过古老的智慧，为您提供心灵的指引与慰藉。如有任何问题，请联系 <a href="mailto:contact@mysticdivination.com" class="text-accent hover:underline">contact@mysticdivination.com</a></p>
+             </div>
+        </section>
+    </main>
+    <footer class="bg-dark/80 py-8 border-t border-accent/20">
+        <div class="container mx-auto px-4 text-center text-light/50 text-sm">
+            <p>© 2025 神秘占卜. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // -------------------  通用功能  -------------------
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('bg-dark/90', window.scrollY > 50);
+            navbar.classList.toggle('backdrop-blur-md', window.scrollY > 50);
+        });
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuToggle.innerHTML = mobileMenu.classList.contains('hidden') ? '<i class="fa fa-bars"></i>' : '<i class="fa fa-times"></i>';
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    menuToggle.innerHTML = '<i class="fa fa-bars"></i>';
+                }
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // -------------------  塔罗牌功能 (已升级) -------------------
+        const drawTarotBtn = document.getElementById('draw-tarot');
+        const tarotResults = document.getElementById('tarot-results');
+        const spreadButtons = document.querySelectorAll('#tarot [data-spread]');
+        let currentSpread = 'single';
+
+        const tarotCardData = [
+            { name: '愚者', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/RWS_Tarot_00_Fool.jpg/399px-RWS_Tarot_00_Fool.jpg', desc: '开始、无限可能、天真、自由、新机遇。' },
+            { name: '魔术师', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/RWS_Tarot_01_Magician.jpg/399px-RWS_Tarot_01_Magician.jpg', desc: '意志力、创造、显化、能力、资源。' },
+            { name: '女祭司', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/RWS_Tarot_02_High_Priestess.jpg/399px-RWS_Tarot_02_High_Priestess.jpg', desc: '直觉、潜意识、神秘、智慧、秘密。' },
+            { name: '皇后', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/RWS_Tarot_03_Empress.jpg/399px-RWS_Tarot_03_Empress.jpg', desc: '丰饶、母性、感性、自然、创造力。' },
+            { name: '皇帝', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/RWS_Tarot_04_Emperor.jpg/399px-RWS_Tarot_04_Emperor.jpg', desc: '权威、结构、秩序、父权、领导力。' },
+            { name: '教皇', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/RWS_Tarot_05_Hierophant.jpg/399px-RWS_Tarot_05_Hierophant.jpg', desc: '传统、信仰、制度、精神指导、教育。' },
+            { name: '恋人', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RWS_Tarot_06_Lovers.jpg/399px-RWS_Tarot_06_Lovers.jpg', desc: '爱、和谐、关系、选择、价值观。' },
+            { name: '战车', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/RWS_Tarot_07_Chariot.jpg/399px-RWS_Tarot_07_Chariot.jpg', desc: '胜利、决心、控制、自信、行动力。' },
+            { name: '力量', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/RWS_Tarot_08_Strength.jpg/399px-RWS_Tarot_08_Strength.jpg', desc: '内在力量、勇气、耐心、慈悲、控制。' },
+            { name: '隐者', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/RWS_Tarot_09_Hermit.jpg/399px-RWS_Tarot_09_Hermit.jpg', desc: '内省、独处、引导、智慧、寻求真理。' },
+            { name: '命运之轮', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg/399px-RWS_Tarot_10_Wheel_of_Fortune.jpg', desc: '命运、转折点、循环、变化、运气。' },
+            { name: '正义', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/RWS_Tarot_11_Justice.jpg/399px-RWS_Tarot_11_Justice.jpg', desc: '公平、真理、因果、法律、责任。' },
+            { name: '倒吊人', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/RWS_Tarot_12_Hanged_Man.jpg/399px-RWS_Tarot_12_Hanged_Man.jpg', desc: '牺牲、顺从、新视角、暂停、等待。' },
+            { name: '死神', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/RWS_Tarot_13_Death.jpg/399px-RWS_Tarot_13_Death.jpg', desc: '结束、转变、重生、放手、过渡。' },
+            { name: '节制', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/RWS_Tarot_14_Temperance.jpg/399px-RWS_Tarot_14_Temperance.jpg', desc: '平衡、调和、耐心、中庸、目标。' },
+            { name: '恶魔', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/RWS_Tarot_15_Devil.jpg/399px-RWS_Tarot_15_Devil.jpg', desc: '束缚、成瘾、物质主义、负面模式。' },
+            { name: '塔', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/RWS_Tarot_16_Tower.jpg/399px-RWS_Tarot_16_Tower.jpg', desc: '突变、灾难、顿悟、揭示真相、混乱。' },
+            { name: '星星', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RWS_Tarot_17_Star.jpg/399px-RWS_Tarot_17_Star.jpg', desc: '希望、信念、灵感、治愈、宁静。' },
+            { name: '月亮', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/RWS_Tarot_18_Moon.jpg/399px-RWS_Tarot_18_Moon.jpg', desc: '幻觉、恐惧、潜意识、直觉、未知。' },
+            { name: '太阳', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/RWS_Tarot_19_Sun.jpg/399px-RWS_Tarot_19_Sun.jpg', desc: '成功、活力、喜悦、清晰、乐观。' },
+            { name: '审判', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/RWS_Tarot_20_Judgement.jpg/399px-RWS_Tarot_20_Judgement.jpg', desc: '审判、重生、内在召唤、反思、宽恕。' },
+            { name: '世界', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/RWS_Tarot_21_World.jpg/399px-RWS_Tarot_21_World.jpg', desc: '完成、整合、成就、旅行、圆满。' }
+        ];
+
+        spreadButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                spreadButtons.forEach(btn => {
+                    btn.classList.remove('bg-primary');
+                    btn.classList.add('bg-dark/70', 'hover:bg-primary/70');
+                });
+                button.classList.add('bg-primary');
+                button.classList.remove('bg-dark/70', 'hover:bg-primary/70');
+                currentSpread = button.dataset.spread;
+            });
+        });
+
+        drawTarotBtn.addEventListener('click', () => {
+            tarotResults.innerHTML = '';
+            
+            // 1. 新增：自动滚动到结果区域
+            setTimeout(() => {
+                tarotResults.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+
+            let cardCount = currentSpread === 'three' ? 3 : 1;
+            const shuffledCards = [...tarotCardData].sort(() => 0.5 - Math.random());
+            
+            for (let i = 0; i < cardCount; i++) {
+                const cardData = shuffledCards[i];
+                const cardElement = document.createElement('div');
+                // 牌的高度从h-80增加到h-96以适应更标准的比例
+                cardElement.className = 'tarot-card-container w-56 h-96 cursor-pointer'; 
+                cardElement.innerHTML = `
+                    <div class="tarot-card">
+                        <div class="tarot-card-front bg-gradient-to-br from-primary to-secondary flex items-center justify-center border-4 border-accent/30">
+                           <img src="https://i.imgur.com/Kz9ZLoD.png" class="p-8 opacity-50" alt="Card Back">
+                        </div>
+                        <div class="tarot-card-back bg-light text-dark flex flex-col justify-start">
+                            <img src="${cardData.img}" alt="${cardData.name}" class="w-full h-3/5 object-cover">
+                            <div class="p-4 flex-grow">
+                                <h3 class="font-serif font-bold text-primary text-xl">${cardData.name}</h3>
+                                <p class="text-sm text-gray-700 mt-2">${cardData.desc}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                tarotResults.appendChild(cardElement);
+
+                // 2. 新增：延时自动翻牌效果
+                setTimeout(() => {
+                    cardElement.querySelector('.tarot-card').classList.add('flipped');
+                }, 300 + i * 400); // 增加延时和间隔，效果更佳
+
+                // 允许用户再次点击翻转回去
+                cardElement.addEventListener('click', () => {
+                    cardElement.querySelector('.tarot-card').classList.toggle('flipped');
+                });
+            }
+        });
+
+
+        // -------------------  星座运势功能 (保持不变) -------------------
+        const horoscopeCards = document.querySelectorAll('.horoscope-card');
+        const horoscopeDetail = document.getElementById('horoscope-detail');
+        const closeHoroscopeBtn = document.getElementById('close-horoscope');
+        const horoscopeTitle = document.getElementById('horoscope-title');
+        const horoscopeSign = document.getElementById('horoscope-sign');
+        const horoscopeContent = document.getElementById('horoscope-content');
+        const horoscopeIndexes = document.getElementById('horoscope-indexes');
+        const horoscopeYearSelector = document.getElementById('horoscope-year-selector');
+        
+        const horoscopeData = {
+            aries: { name: '白羊座', sign: '♈' }, taurus: { name: '金牛座', sign: '♉' },
+            gemini: { name: '双子座', sign: '♊' }, cancer: { name: '巨蟹座', sign: '♋' },
+            leo: { name: '狮子座', sign: '♌' }, virgo: { name: '处女座', sign: '♍' },
+            libra: { name: '天秤座', sign: '♎' }, scorpio: { name: '天蝎座', sign: '♏' },
+            sagittarius: { name: '射手座', sign: '♐' }, capricorn: { name: '摩羯座', sign: '♑' },
+            aquarius: { name: '水瓶座', sign: '♒' }, pisces: { name: '双鱼座', sign: '♓' }
+        };
+
+        function populateYearSelector(selectorId, range, reverse = false) {
+            const selector = document.getElementById(selectorId);
+            if (!selector) return;
+            selector.innerHTML = '';
+            const currentYear = new Date().getFullYear();
+            for (let i = -range; i <= range; i++) {
+                const year = currentYear + i;
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = `${year}年`;
+                if (year === currentYear) option.selected = true;
+                if (reverse) selector.prepend(option);
+                else selector.appendChild(option);
+            }
+        }
+        
+        function getHoroscopeFortune(sign, year) {
+            const seed = year + sign.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            const fortunes = [
+                "将是充满机遇的一年，事业上将有重大突破，但也需注意人际关系的处理。爱情运旺盛，单身者有望遇到真爱。",
+                "是稳步发展的一年。财务状况良好，适合进行长期投资。感情生活平淡而温馨，需多花时间陪伴家人。",
+                "挑战与机遇并存。工作上会遇到一些困难，但克服后将获得巨大成长。健康方面需注意劳逸结合。",
+                "是学习和成长的一年。适合进修或学习新技能。旅行运佳，多出去走走会有意想不到的收获。",
+                "人际关系成为今年的重点。多与朋友和同事交流，会得到许多宝贵的支持。财运平平，不宜进行高风险投资。",
+                "是需要沉淀和反思的一年。放慢脚步，审视内心，会发现新的方向。感情上可能会经历一些考验，沟通是关键。"
+            ];
+            return {
+                text: `${horoscopeData[sign].name}在${year}年${fortunes[seed % fortunes.length]}`,
+                love: (seed * 2 % 3) + 3,
+                career: (seed * 3 % 3) + 3,
+                wealth: (seed * 4 % 3) + 3
+            };
+        }
+        
+        function renderStars(count) {
+            let stars = '';
+            for(let i = 0; i < 5; i++) {
+                stars += `<i class="fa fa-${i < count ? 'star' : 'star-o'}"></i>`;
+            }
+            return stars;
+        }
+
+        function updateHoroscopeView(sign) {
+            const year = horoscopeYearSelector.value;
+            const data = horoscopeData[sign];
+            const fortune = getHoroscopeFortune(sign, year);
+
+            horoscopeTitle.textContent = `${data.name} ${year}年运势`;
+            horoscopeSign.textContent = data.sign;
+            horoscopeContent.textContent = fortune.text;
+            
+            horoscopeIndexes.innerHTML = `
+                <div class="bg-primary/20 p-4 rounded-lg"><h4 class="font-semibold mb-2">爱情指数</h4><div class="flex text-accent mb-1">${renderStars(fortune.love)}</div></div>
+                <div class="bg-primary/20 p-4 rounded-lg"><h4 class="font-semibold mb-2">事业指数</h4><div class="flex text-accent mb-1">${renderStars(fortune.career)}</div></div>
+                <div class="bg-primary/20 p-4 rounded-lg"><h4 class="font-semibold mb-2">财运指数</h4><div class="flex text-accent mb-1">${renderStars(fortune.wealth)}</div></div>
+            `;
+            horoscopeDetail.dataset.currentSign = sign;
+        }
+
+        horoscopeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const sign = card.dataset.sign;
+                updateHoroscopeView(sign);
+                horoscopeDetail.classList.remove('hidden');
+                horoscopeDetail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+
+        horoscopeYearSelector.addEventListener('change', () => {
+            const currentSign = horoscopeDetail.dataset.currentSign;
+            if (currentSign) {
+                updateHoroscopeView(currentSign);
+            }
+        });
+
+        closeHoroscopeBtn.addEventListener('click', () => {
+            horoscopeDetail.classList.add('hidden');
+        });
+
+        // -------------------  生肖功能 (保持不变) -------------------
+        const zodiacCards = document.querySelectorAll('.生肖-card');
+        const zodiacDetail = document.getElementById('zodiac-detail');
+        const closeZodiacBtn = document.getElementById('close-zodiac');
+        const zodiacYearSelector = document.getElementById('zodiac-year-selector');
+
+        const zodiacStaticData = {
+            rat: { icon: '🐀', name: '鼠', character: '聪明机智，适应力强，乐观开朗，善于交际。', love: '热情主动，对伴侣忠诚体贴，但有时过于敏感。' },
+            ox: { icon: '🐂', name: '牛', character: '踏实稳重，有耐心和毅力，诚实守信。', love: '忠诚专一，不善言辞但行动力强，是可靠的伴侣。' },
+            tiger: { icon: '🐅', name: '虎', character: '勇敢自信，富有领导力，热情开朗，喜欢挑战。', love: '热情奔放，占有欲强，需要学会尊重对方。' },
+            rabbit: { icon: '🐇', name: '兔', character: '温和善良，乐观开朗，待人友善，喜欢和平。', love: '温柔体贴，关怀备至，会努力营造温馨的家庭。' },
+            dragon: { icon: '🐉', name: '龙', character: '自信满满，富有创造力，有远大理想和抱负。', love: '热情专一，但有时自我中心，需多关心伴侣。' },
+            snake: { icon: '🐍', name: '蛇', character: '聪明机智，富有洞察力，有神秘气质。', love: '含蓄内敛，对伴侣忠诚，但有时过于敏感。' },
+            horse: { icon: '🐎', name: '马', character: '活力充沛，热情开朗，喜欢自由和冒险。', love: '热情奔放，喜欢自由，需要能理解自己的伴侣。' },
+            sheep: { icon: '🐑', name: '羊', character: '温和善良，富有想象力，喜欢艺术和文学。', love: '温柔体贴，依赖性强，渴望得到伴侣的关爱。' },
+            monkey: { icon: '🐒', name: '猴', character: '聪明机智，活泼好动，善于模仿和学习。', love: '热情幽默，善于制造浪漫，但需要稳定感。' },
+            rooster: { icon: '🐓', name: '鸡', character: '自信满满，追求完美，有强烈的责任心。', love: '热情专一，但有时过于挑剔，需要学会包容。' },
+            dog: { icon: '🐕', name: '狗', character: '忠诚正直，诚实守信，待人真诚。', love: '忠诚专一，为爱可以付出一切，是可靠的港湾。' },
+            pig: { icon: '🐖', name: '猪', character: '温和善良，乐观开朗，待人友善，不喜争斗。', love: '温柔体贴，懂得包容，是懂得享受生活的伴侣。' }
+        };
+        const naYinData = { '甲子乙丑': '海中金', '丙寅丁卯': '炉中火', '戊辰己巳': '大林木', '庚午辛未': '路旁土', '壬申癸酉': '剑锋金', '甲戌乙亥': '山头火', '丙子丁丑': '涧下水', '戊寅己卯': '城头土', '庚辰辛巳': '白蜡金', '壬午癸未': '杨柳木', '甲申乙酉': '泉中水', '丙戌丁亥': '屋上土', '戊子己丑': '霹雳火', '庚寅辛卯': '松柏木', '壬辰癸巳': '长流水', '甲午乙未': '沙中金', '丙申丁酉': '山下火', '戊戌己亥': '平地木', '庚子辛丑': '壁上土', '壬寅癸卯': '金箔金', '甲辰乙巳': '覆灯火', '丙午丁未': '天河水', '戊申己酉': '大驿土', '庚戌辛亥': '钗钏金', '壬子癸丑': '桑柘木', '甲寅乙卯': '大溪水', '丙辰丁巳': '沙中土', '戊午己未': '天上火', '庚申辛酉': '石榴木', '壬戌癸亥': '大海水' };
+        const heavenlyStems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+        const earthlyBranches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+
+        function getNayinForYear(year) {
+            const offset = year - 1984;
+            const stemIndex = (offset % 10 + 10) % 10;
+            const branchIndex = (offset % 12 + 12) % 12;
+            const jiazi = heavenlyStems[stemIndex] + earthlyBranches[branchIndex];
+            
+            for(const key in naYinData) {
+                if(key.includes(jiazi)) {
+                    return `【${jiazi}年】生人，其纳音五行为【${naYinData[key]}】。${naYinData[key]}命人通常性格坚韧，需经历磨砺方能成器，中年后运势渐开，晚年福厚。`;
+                }
+            }
+            return '暂无该年份的纳音解析。';
+        }
+
+        function updateZodiacView(animal) {
+            const year = zodiacYearSelector.value;
+            document.getElementById('zodiac-nayin-text').textContent = getNayinForYear(year);
+        }
+
+        zodiacCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const animal = card.dataset.animal;
+                const data = zodiacStaticData[animal];
+                
+                document.getElementById('zodiac-icon').textContent = data.icon;
+                document.getElementById('zodiac-name').textContent = `属${data.name}`;
+                document.getElementById('zodiac-character').textContent = data.character;
+                document.getElementById('zodiac-love').textContent = data.love;
+                
+                updateZodiacView(animal);
+                
+                zodiacDetail.dataset.currentAnimal = animal;
+                zodiacDetail.classList.remove('hidden');
+                zodiacDetail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+        
+        zodiacYearSelector.addEventListener('change', () => {
+            const currentAnimal = zodiacDetail.dataset.currentAnimal;
+            if (currentAnimal) {
+                updateZodiacView(currentAnimal);
+            }
+        });
+
+        closeZodiacBtn.addEventListener('click', () => {
+            zodiacDetail.classList.add('hidden');
+        });
+
+        // -------------------  页面初始化  -------------------
+        document.addEventListener('DOMContentLoaded', () => {
+            populateYearSelector('horoscope-year-selector', 10);
+            populateYearSelector('zodiac-year-selector', 30, true);
+        });
+
+    </script>
+</body>
+</html>
