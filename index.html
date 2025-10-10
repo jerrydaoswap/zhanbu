@@ -64,6 +64,9 @@
                 @apply absolute w-56 h-96 bg-gradient-to-br from-primary to-secondary rounded-xl border-4 border-accent/30;
                 animation: shuffle 1s ease-in-out infinite;
             }
+            #lang-selector { position: relative; }
+            #lang-dropdown { display: none; position: absolute; right: 0; top: 100%; background-color: #1E1B4B; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 0.5rem; z-index: 100; }
+            #lang-selector:hover #lang-dropdown { display: block; }
         }
     </style>
 </head>
@@ -76,24 +79,32 @@
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="#home" class="flex items-center space-x-2">
                 <i class="fa fa-moon-o text-2xl text-accent"></i>
-                <span class="text-xl font-bold">神秘占卜</span>
+                <span class="text-xl font-bold" data-translate-key="site_name">神秘占卜</span>
             </a>
-            <nav class="hidden md:flex space-x-6">
-                <a href="#home" class="nav-link">首页</a>
-                <a href="#tarot" class="nav-link">塔罗占卜</a>
-                <a href="#horoscope" class="nav-link">星座运势</a>
-                <a href="#zodiac" class="nav-link">生肖命理</a>
-                <a href="#about" class="nav-link">关于我们</a>
+            <nav class="hidden md:flex space-x-6 items-center">
+                <a href="#home" class="nav-link" data-translate-key="nav_home">首页</a>
+                <a href="#tarot" class="nav-link" data-translate-key="nav_tarot">塔罗占卜</a>
+                <a href="#horoscope" class="nav-link" data-translate-key="nav_horoscope">星座运势</a>
+                <a href="#zodiac" class="nav-link" data-translate-key="nav_zodiac">生肖命理</a>
+                <a href="#about" class="nav-link" data-translate-key="nav_about">关于我们</a>
+                 <div id="lang-selector">
+                    <button class="nav-link"><i class="fa fa-globe mr-1"></i> <span id="current-lang-text"></span></button>
+                    <div id="lang-dropdown">
+                        <a href="#" class="block px-4 py-2 text-sm text-light hover:bg-primary/50 rounded" data-lang="zh-CN">简体中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-light hover:bg-primary/50 rounded" data-lang="zh-TW">繁體中文</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-light hover:bg-primary/50 rounded" data-lang="en">English</a>
+                    </div>
+                </div>
             </nav>
             <button class="md:hidden text-2xl" id="menu-toggle"><i class="fa fa-bars"></i></button>
         </div>
         <div class="md:hidden bg-dark/90 backdrop-blur-md hidden" id="mobile-menu">
             <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
-                <a href="#home" class="text-light hover:text-accent py-2 border-b border-gray-700">首页</a>
-                <a href="#tarot" class="text-light hover:text-accent py-2 border-b border-gray-700">塔罗占卜</a>
-                <a href="#horoscope" class="text-light hover:text-accent py-2 border-b border-gray-700">星座运势</a>
-                <a href="#zodiac" class="text-light hover:text-accent py-2 border-b border-gray-700">生肖命理</a>
-                <a href="#about" class="text-light hover:text-accent py-2">关于我们</a>
+                <a href="#home" class="text-light hover:text-accent py-2 border-b border-gray-700" data-translate-key="nav_home">首页</a>
+                <a href="#tarot" class="text-light hover:text-accent py-2 border-b border-gray-700" data-translate-key="nav_tarot">塔罗占卜</a>
+                <a href="#horoscope" class="text-light hover:text-accent py-2 border-b border-gray-700" data-translate-key="nav_horoscope">星座运势</a>
+                <a href="#zodiac" class="text-light hover:text-accent py-2 border-b border-gray-700" data-translate-key="nav_zodiac">生肖命理</a>
+                <a href="#about" class="text-light hover:text-accent py-2" data-translate-key="nav_about">关于我们</a>
             </div>
         </div>
     </header>
@@ -104,12 +115,12 @@
         <section id="home" class="relative min-h-[80vh] flex items-center justify-center text-center">
             <div class="absolute inset-0 bg-gradient-to-b from-dark/70 to-primary/70"></div>
             <div class="container mx-auto px-4 relative z-10">
-                <h1 class="text-[clamp(2.5rem,6vw,4.5rem)] font-bold mb-6 leading-tight text-shadow-lg">探索命运的<span class="text-accent">奥秘</span></h1>
-                <p class="text-[clamp(1rem,2vw,1.25rem)] max-w-2xl mx-auto mb-10 text-light/90">通过古老的占卜艺术，洞察过去、现在与未来，寻找内心的指引与答案</p>
+                <h1 class="text-[clamp(2.5rem,6vw,4.5rem)] font-bold mb-6 leading-tight text-shadow-lg" data-translate-key="hero_title">探索命运的<span class="text-accent" data-translate-key="hero_title_accent">奥秘</span></h1>
+                <p class="text-[clamp(1rem,2vw,1.25rem)] max-w-2xl mx-auto mb-10 text-light/90" data-translate-key="hero_subtitle">通过古老的占卜艺术，洞察过去、现在与未来，寻找内心的指引与答案</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#tarot" class="btn-purple">塔罗占卜</a>
-                    <a href="#horoscope" class="btn-purple bg-secondary/80 hover:bg-secondary">星座运势</a>
-                    <a href="#zodiac" class="btn-purple bg-secondary/60 hover:bg-secondary/80">生肖命理</a>
+                    <a href="#tarot" class="btn-purple" data-translate-key="nav_tarot">塔罗占卜</a>
+                    <a href="#horoscope" class="btn-purple bg-secondary/80 hover:bg-secondary" data-translate-key="nav_horoscope">星座运势</a>
+                    <a href="#zodiac" class="btn-purple bg-secondary/60 hover:bg-secondary/80" data-translate-key="nav_zodiac">生肖命理</a>
                 </div>
             </div>
         </section>
@@ -118,20 +129,20 @@
         <section id="tarot" class="py-20 bg-dark/50">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold mb-4">塔罗占卜</h2>
-                    <p class="text-light/80 max-w-2xl mx-auto">专注内心，提出你的问题，让塔罗牌给你指引</p>
+                    <h2 class="text-4xl font-bold mb-4" data-translate-key="tarot_section_title">塔罗占卜</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto" data-translate-key="tarot_section_subtitle">专注内心，提出你的问题，让塔罗牌给你指引</p>
                 </div>
                 <div class="max-w-4xl mx-auto">
                     <div class="flex justify-center gap-4 mb-8">
-                        <button class="bg-primary px-5 py-2 rounded-full transition" data-spread="single">单张牌</button>
-                        <button class="bg-dark/70 hover:bg-primary/70 px-5 py-2 rounded-full transition" data-spread="three">三张牌</button>
+                        <button class="bg-primary px-5 py-2 rounded-full transition" data-spread="single" data-translate-key="tarot_spread_single">单张牌</button>
+                        <button class="bg-dark/70 hover:bg-primary/70 px-5 py-2 rounded-full transition" data-spread="three" data-translate-key="tarot_spread_three">三张牌</button>
                     </div>
                     <div class="text-center mb-6">
-                        <label for="tarot-question" class="block mb-2 text-light/80">在心中默念您的问题，并在此输入：</label>
-                        <input type="text" id="tarot-question" placeholder="例如：我近期的事业运势如何？" class="w-full max-w-lg mx-auto bg-dark/50 border border-accent/30 rounded-lg px-4 py-2 text-light focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent">
+                        <label for="tarot-question" class="block mb-2 text-light/80" data-translate-key="tarot_question_label">在心中默念您的问题，并在此输入：</label>
+                        <input type="text" id="tarot-question" class="w-full max-w-lg mx-auto bg-dark/50 border border-accent/30 rounded-lg px-4 py-2 text-light focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent" data-translate-key-placeholder="tarot_question_placeholder">
                     </div>
                     <div class="text-center mb-8">
-                        <button id="draw-tarot" class="btn-purple"><i class="fa fa-random mr-2"></i>开始解牌</button>
+                        <button id="draw-tarot" class="btn-purple"><i class="fa fa-random mr-2"></i><span data-translate-key="tarot_draw_button">开始解牌</span></button>
                     </div>
 
                     <div id="tarot-process-area" class="mt-12 min-h-[420px]">
@@ -139,15 +150,15 @@
                             <div class="shuffling-card" style="animation-delay: 0s;"></div>
                             <div class="shuffling-card" style="animation-delay: 0.2s;"></div>
                             <div class="shuffling-card" style="animation-delay: 0.4s;"></div>
-                            <p class="absolute bottom-0 text-accent font-serif">正在洗牌...</p>
+                            <p class="absolute bottom-0 text-accent font-serif" data-translate-key="tarot_shuffling">正在洗牌...</p>
                         </div>
                         <div id="question-display" class="text-center mb-8 hidden">
-                            <p class="text-light/70">关于您的问题：</p>
+                            <p class="text-light/70" data-translate-key="tarot_your_question">关于您的问题：</p>
                             <p class="text-accent text-xl font-serif" id="question-text"></p>
                         </div>
                         <div id="tarot-results"></div>
                         <div id="ai-interpretation-area" class="text-center mt-10 hidden">
-                            <button id="ai-interpret-btn" class="btn-purple bg-accent/80 hover:bg-accent text-dark"><i class="fa fa-magic mr-2"></i>AI 结合问题解读</button>
+                            <button id="ai-interpret-btn" class="btn-purple bg-accent/80 hover:bg-accent text-dark"><i class="fa fa-magic mr-2"></i><span data-translate-key="tarot_ai_interpret_button">AI 结合问题解读</span></button>
                             <div id="ai-result" class="mt-6 bg-dark/40 p-6 rounded-lg border border-accent/20 text-left hidden">
                                 <p id="ai-result-text" class="text-light/90 whitespace-pre-wrap"></p>
                             </div>
@@ -161,40 +172,29 @@
         <section id="horoscope" class="py-20 bg-primary/30">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold mb-4">星座运势</h2>
-                    <p class="text-light/80 max-w-2xl mx-auto">选择你的星座，查看不同时间维度的运势走向</p>
+                    <h2 class="text-4xl font-bold mb-4" data-translate-key="horoscope_section_title">星座运势</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto" data-translate-key="horoscope_section_subtitle">选择你的星座，查看不同时间维度的运势走向</p>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="aries"><div class="text-4xl mb-3 text-accent">♈</div><h3 class="text-xl font-semibold mb-2">白羊座</h3><p class="text-light/70 text-sm mb-4">3/21-4/19</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="taurus"><div class="text-4xl mb-3 text-accent">♉</div><h3 class="text-xl font-semibold mb-2">金牛座</h3><p class="text-light/70 text-sm mb-4">4/20-5/20</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="gemini"><div class="text-4xl mb-3 text-accent">♊</div><h3 class="text-xl font-semibold mb-2">双子座</h3><p class="text-light/70 text-sm mb-4">5/21-6/20</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="cancer"><div class="text-4xl mb-3 text-accent">♋</div><h3 class="text-xl font-semibold mb-2">巨蟹座</h3><p class="text-light/70 text-sm mb-4">6/21-7/22</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="leo"><div class="text-4xl mb-3 text-accent">♌</div><h3 class="text-xl font-semibold mb-2">狮子座</h3><p class="text-light/70 text-sm mb-4">7/23-8/22</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="virgo"><div class="text-4xl mb-3 text-accent">♍</div><h3 class="text-xl font-semibold mb-2">处女座</h3><p class="text-light/70 text-sm mb-4">8/23-9/22</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="libra"><div class="text-4xl mb-3 text-accent">♎</div><h3 class="text-xl font-semibold mb-2">天秤座</h3><p class="text-light/70 text-sm mb-4">9/23-10/22</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="scorpio"><div class="text-4xl mb-3 text-accent">♏</div><h3 class="text-xl font-semibold mb-2">天蝎座</h3><p class="text-light/70 text-sm mb-4">10/23-11/21</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="sagittarius"><div class="text-4xl mb-3 text-accent">♐</div><h3 class="text-xl font-semibold mb-2">射手座</h3><p class="text-light/70 text-sm mb-4">11/22-12/21</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="capricorn"><div class="text-4xl mb-3 text-accent">♑</div><h3 class="text-xl font-semibold mb-2">摩羯座</h3><p class="text-light/70 text-sm mb-4">12/22-1/19</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="aquarius"><div class="text-4xl mb-3 text-accent">♒</div><h3 class="text-xl font-semibold mb-2">水瓶座</h3><p class="text-light/70 text-sm mb-4">1/20-2/18</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
-                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center" data-sign="pisces"><div class="text-4xl mb-3 text-accent">♓</div><h3 class="text-xl font-semibold mb-2">双鱼座</h3><p class="text-light/70 text-sm mb-4">2/19-3/20</p><button class="text-accent hover:underline text-sm">查看运势</button></div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="horoscope-grid">
+                    <!-- Horoscope cards will be dynamically populated -->
                 </div>
                 <div id="horoscope-detail" class="mt-16 bg-dark/70 backdrop-blur-md rounded-xl p-8 border border-accent/30 hidden">
                     <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
                         <h3 class="text-2xl font-bold" id="horoscope-title"></h3>
                         <div id="horoscope-granularity-selector" class="flex flex-wrap gap-2">
-                            <button data-granularity="day" class="px-3 py-1 text-sm rounded-full bg-primary">今日</button>
-                            <button data-granularity="week" class="px-3 py-1 text-sm rounded-full bg-dark/70">本周</button>
-                            <button data-granularity="month" class="px-3 py-1 text-sm rounded-full bg-dark/70">本月</button>
-                            <button data-granularity="year" class="px-3 py-1 text-sm rounded-full bg-dark/70">本年</button>
+                            <button data-granularity="day" class="px-3 py-1 text-sm rounded-full bg-primary" data-translate-key="horoscope_day">今日</button>
+                            <button data-granularity="week" class="px-3 py-1 text-sm rounded-full bg-dark/70" data-translate-key="horoscope_week">本周</button>
+                            <button data-granularity="month" class="px-3 py-1 text-sm rounded-full bg-dark/70" data-translate-key="horoscope_month">本月</button>
+                            <button data-granularity="year" class="px-3 py-1 text-sm rounded-full bg-dark/70" data-translate-key="horoscope_year">本年</button>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8" id="horoscope-indexes"></div>
                     <div class="bg-primary/20 p-6 rounded-lg">
-                        <h4 class="font-semibold mb-3">综合运势</h4>
+                        <h4 class="font-semibold mb-3" data-translate-key="horoscope_summary">综合运势</h4>
                         <p class="text-light/80" id="horoscope-content"></p>
                     </div>
                     <div class="mt-6 text-right">
-                        <button id="close-horoscope" class="text-accent hover:underline">关闭</button>
+                        <button id="close-horoscope" class="text-accent hover:underline" data-translate-key="common_close">关闭</button>
                     </div>
                 </div>
             </div>
@@ -204,22 +204,11 @@
         <section id="zodiac" class="py-20 bg-dark/50">
              <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold mb-4">生肖命理</h2>
-                    <p class="text-light/80 max-w-2xl mx-auto">点击你的生肖，查看性格、纳音五行及生肖关系</p>
+                    <h2 class="text-4xl font-bold mb-4" data-translate-key="zodiac_section_title">生肖命理</h2>
+                    <p class="text-light/80 max-w-2xl mx-auto" data-translate-key="zodiac_section_subtitle">点击你的生肖，查看性格、纳音五行及生肖关系</p>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="rat"><div class="text-4xl mb-3 text-accent">🐀</div><h3 class="text-lg font-semibold">鼠</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="ox"><div class="text-4xl mb-3 text-accent">🐂</div><h3 class="text-lg font-semibold">牛</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="tiger"><div class="text-4xl mb-3 text-accent">🐅</div><h3 class="text-lg font-semibold">虎</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="rabbit"><div class="text-4xl mb-3 text-accent">🐇</div><h3 class="text-lg font-semibold">兔</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="dragon"><div class="text-4xl mb-3 text-accent">🐉</div><h3 class="text-lg font-semibold">龙</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="snake"><div class="text-4xl mb-3 text-accent">🐍</div><h3 class="text-lg font-semibold">蛇</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="horse"><div class="text-4xl mb-3 text-accent">🐎</div><h3 class="text-lg font-semibold">马</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="sheep"><div class="text-4xl mb-3 text-accent">🐑</div><h3 class="text-lg font-semibold">羊</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="monkey"><div class="text-4xl mb-3 text-accent">🐒</div><h3 class="text-lg font-semibold">猴</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="rooster"><div class="text-4xl mb-3 text-accent">🐓</div><h3 class="text-lg font-semibold">鸡</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="dog"><div class="text-4xl mb-3 text-accent">🐕</div><h3 class="text-lg font-semibold">狗</h3></div>
-                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="pig"><div class="text-4xl mb-3 text-accent">🐖</div><h3 class="text-lg font-semibold">猪</h3></div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6" id="zodiac-grid">
+                    <!-- Zodiac cards will be dynamically populated -->
                 </div>
                 <div id="zodiac-detail" class="mt-16 bg-dark/70 backdrop-blur-md rounded-xl p-8 border border-accent/30 hidden">
                     <div class="flex flex-col md:flex-row gap-8">
@@ -229,16 +218,16 @@
                         </div>
                         <div class="md:w-3/4">
                             <div id="zodiac-static-content">
-                                <h4 class="text-xl font-semibold mb-3">性格特点</h4>
+                                <h4 class="text-xl font-semibold mb-3" data-translate-key="zodiac_personality">性格特点</h4>
                                 <p class="text-light/80 mb-6" id="zodiac-character"></p>
                             </div>
                             <div class="mt-6 pt-6 border-t border-accent/20">
-                                <h4 class="text-xl font-semibold mb-3">生肖关系</h4>
+                                <h4 class="text-xl font-semibold mb-3" data-translate-key="zodiac_relations">生肖关系</h4>
                                 <div id="zodiac-relations" class="text-sm space-y-2"></div>
                             </div>
                             <div class="mt-6 pt-6 border-t border-accent/20">
                                 <div class="flex items-center gap-4 mb-4">
-                                     <h4 class="text-xl font-semibold">纳音五行解析</h4>
+                                     <h4 class="text-xl font-semibold" data-translate-key="zodiac_nayin">纳音五行解析</h4>
                                      <select id="zodiac-year-selector" class="bg-primary/50 border border-accent/30 rounded-md px-2 py-1 text-light focus:outline-none"></select>
                                 </div>
                                 <p class="text-light/80 text-sm" id="zodiac-nayin-text"></p>
@@ -246,7 +235,7 @@
                         </div>
                     </div>
                     <div class="mt-6 text-right">
-                        <button id="close-zodiac" class="text-accent hover:underline">关闭</button>
+                        <button id="close-zodiac" class="text-accent hover:underline" data-translate-key="common_close">关闭</button>
                     </div>
                 </div>
             </div>
@@ -255,18 +244,382 @@
         <!-- 关于我们 & 页脚 -->
         <section id="about" class="py-20 bg-primary/30">
              <div class="container mx-auto px-4 text-center">
-                 <h2 class="text-4xl font-bold mb-4">关于我们</h2>
-                 <p class="text-light/80 max-w-2xl mx-auto">我们致力于通过古老的智慧，为您提供心灵的指引与慰藉。如有任何问题，请联系 <a href="mailto:contact@mysticdivination.com" class="text-accent hover:underline">contact@mysticdivination.com</a></p>
+                 <h2 class="text-4xl font-bold mb-4" data-translate-key="nav_about">关于我们</h2>
+                 <p class="text-light/80 max-w-2xl mx-auto" data-translate-key="about_content">我们致力于通过古老的智慧，为您提供心灵的指引与慰藉。如有任何问题，请联系 <a href="mailto:contact@mysticdivination.com" class="text-accent hover:underline">contact@mysticdivination.com</a></p>
              </div>
         </section>
     </main>
     <footer class="bg-dark/80 py-8 border-t border-accent/20">
         <div class="container mx-auto px-4 text-center text-light/50 text-sm">
-            <p>© 2025 神秘占卜. 保留所有权利.</p>
+            <p data-translate-key="footer_text">© 2025 神秘占卜. 保留所有权利.</p>
         </div>
     </footer>
 
     <script>
+        // --- START OF INTERNATIONALIZATION (I18N) SETUP ---
+        
+        let currentLanguage = 'zh-CN';
+
+        const translations = {
+            'zh-CN': {
+                lang_name: '简体中文',
+                page_title: '神秘占卜 | 探索命运的奥秘',
+                site_name: '神秘占卜',
+                nav_home: '首页',
+                nav_tarot: '塔罗占卜',
+                nav_horoscope: '星座运势',
+                nav_zodiac: '生肖命理',
+                nav_about: '关于我们',
+                hero_title: '探索命运的',
+                hero_title_accent: '奥秘',
+                hero_subtitle: '通过古老的占卜艺术，洞察过去、现在与未来，寻找内心的指引与答案',
+                tarot_section_title: '塔罗占卜',
+                tarot_section_subtitle: '专注内心，提出你的问题，让塔罗牌给你指引',
+                tarot_spread_single: '单张牌',
+                tarot_spread_three: '三张牌',
+                tarot_question_label: '在心中默念您的问题，并在此输入：',
+                tarot_question_placeholder: '例如：我近期的事业运势如何？',
+                tarot_draw_button: '开始解牌',
+                tarot_shuffling: '正在洗牌...',
+                tarot_your_question: '关于您的问题：',
+                tarot_ai_interpret_button: 'AI 结合问题解读',
+                tarot_ai_interpreting_button: 'AI 正在解读中...',
+                tarot_orientation_upright: '正位',
+                tarot_orientation_reversed: '逆位',
+                horoscope_section_title: '星座运势',
+                horoscope_section_subtitle: '选择你的星座，查看不同时间维度的运势走向',
+                horoscope_check_fortune: '查看运势',
+                horoscope_day: '今日',
+                horoscope_week: '本周',
+                horoscope_month: '本月',
+                horoscope_year: '本年',
+                horoscope_summary: '综合运势',
+                horoscope_love_index: '爱情指数',
+                horoscope_career_index: '事业指数',
+                horoscope_wealth_index: '财运指数',
+                horoscope_fortune_suffix: '运势',
+                zodiac_section_title: '生肖命理',
+                zodiac_section_subtitle: '点击你的生肖，查看性格、纳音五行及生肖关系',
+                zodiac_personality: '性格特点',
+                zodiac_relations: '生肖关系',
+                zodiac_nayin: '纳音五行解析',
+                zodiac_nayin_unavailable: '暂无该年份的纳音解析。',
+                zodiac_prefix: '属',
+                zodiac_year_suffix: '年',
+                about_content: '我们致力于通过古老的智慧，为您提供心灵的指引与慰藉。如有任何问题，请联系 ',
+                footer_text: '© 2025 神秘占卜. 保留所有权利.',
+                common_close: '关闭',
+            },
+            'zh-TW': {
+                lang_name: '繁體中文',
+                page_title: '神秘占卜 | 探索命運的奧秘',
+                site_name: '神秘占卜',
+                nav_home: '首頁',
+                nav_tarot: '塔羅占卜',
+                nav_horoscope: '星座運勢',
+                nav_zodiac: '生肖命理',
+                nav_about: '關於我們',
+                hero_title: '探索命運的',
+                hero_title_accent: '奧秘',
+                hero_subtitle: '透過古老的占卜藝術，洞察過去、現在與未來，尋找内心的指引與答案',
+                tarot_section_title: '塔羅占卜',
+                tarot_section_subtitle: '專注内心，提出您的問題，讓塔羅牌給您指引',
+                tarot_spread_single: '單張牌',
+                tarot_spread_three: '三張牌',
+                tarot_question_label: '在心中默念您的問題，並在此輸入：',
+                tarot_question_placeholder: '例如：我近期的事業運勢如何？',
+                tarot_draw_button: '開始解牌',
+                tarot_shuffling: '正在洗牌...',
+                tarot_your_question: '關於您的問題：',
+                tarot_ai_interpret_button: 'AI 結合問題解讀',
+                tarot_ai_interpreting_button: 'AI 正在解讀中...',
+                tarot_orientation_upright: '正位',
+                tarot_orientation_reversed: '逆位',
+                horoscope_section_title: '星座運勢',
+                horoscope_section_subtitle: '選擇您的星座，查看不同時間維度的運勢走向',
+                horoscope_check_fortune: '查看運勢',
+                horoscope_day: '今日',
+                horoscope_week: '本週',
+                horoscope_month: '本月',
+                horoscope_year: '本年',
+                horoscope_summary: '綜合運勢',
+                horoscope_love_index: '愛情指數',
+                horoscope_career_index: '事業指數',
+                horoscope_wealth_index: '財運指數',
+                horoscope_fortune_suffix: '運勢',
+                zodiac_section_title: '生肖命理',
+                zodiac_section_subtitle: '點擊您的生肖，查看性格、納音五行及生肖關係',
+                zodiac_personality: '性格特點',
+                zodiac_relations: '生肖關係',
+                zodiac_nayin: '納音五行解析',
+                zodiac_nayin_unavailable: '暫無該年份的納音解析。',
+                zodiac_prefix: '屬',
+                zodiac_year_suffix: '年',
+                about_content: '我們致力於透過古老的智慧，為您提供心靈的指引與慰藉。如有任何問題，請聯繫 ',
+                footer_text: '© 2025 神秘占卜. 保留所有權利.',
+                common_close: '關閉',
+            },
+            'en': {
+                lang_name: 'English',
+                page_title: 'Mystic Divination | Explore the Mysteries of Fate',
+                site_name: 'Mystic Divination',
+                nav_home: 'Home',
+                nav_tarot: 'Tarot Reading',
+                nav_horoscope: 'Horoscope',
+                nav_zodiac: 'Zodiac Lore',
+                nav_about: 'About Us',
+                hero_title: 'Explore the',
+                hero_title_accent: 'Mysteries',
+                hero_subtitle: 'of Fate. Gain insight into the past, present, and future through ancient arts of divination, finding guidance and answers within.',
+                tarot_section_title: 'Tarot Reading',
+                tarot_section_subtitle: 'Focus your mind, ask your question, and let the tarot cards guide you.',
+                tarot_spread_single: 'Single Card',
+                tarot_spread_three: 'Three Cards',
+                tarot_question_label: 'Concentrate on your question and type it here:',
+                tarot_question_placeholder: 'e.g., How is my career outlook recently?',
+                tarot_draw_button: 'Start Reading',
+                tarot_shuffling: 'Shuffling cards...',
+                tarot_your_question: 'Regarding your question:',
+                tarot_ai_interpret_button: 'AI Interpretation',
+                tarot_ai_interpreting_button: 'AI is interpreting...',
+                tarot_orientation_upright: 'Upright',
+                tarot_orientation_reversed: 'Reversed',
+                horoscope_section_title: 'Horoscope',
+                horoscope_section_subtitle: 'Select your sign to check your fortune across different timeframes.',
+                horoscope_check_fortune: 'Check Fortune',
+                horoscope_day: 'Today',
+                horoscope_week: 'This Week',
+                horoscope_month: 'This Month',
+                horoscope_year: 'This Year',
+                horoscope_summary: 'Overall Fortune',
+                horoscope_love_index: 'Love Index',
+                horoscope_career_index: 'Career Index',
+                horoscope_wealth_index: 'Wealth Index',
+                horoscope_fortune_suffix: ' Fortune',
+                zodiac_section_title: 'Zodiac Lore',
+                zodiac_section_subtitle: 'Click your zodiac animal to explore its personality, Na Yin elements, and relationships.',
+                zodiac_personality: 'Personality Traits',
+                zodiac_relations: 'Zodiac Relationships',
+                zodiac_nayin: 'Na Yin Five Elements Analysis',
+                zodiac_nayin_unavailable: 'The Na Yin element system is specific to East Asian metaphysics and does not have a direct English equivalent. The analysis is based on the Sexagenary cycle (Ganzhi).',
+                zodiac_prefix: 'Year of the ',
+                zodiac_year_suffix: '',
+                about_content: 'We are dedicated to providing spiritual guidance and comfort through ancient wisdom. For any inquiries, please contact ',
+                footer_text: '© 2025 Mystic Divination. All Rights Reserved.',
+                common_close: 'Close',
+            }
+        };
+
+        const tarotCardData = [
+            { id: 'fool', img: 'https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg' },
+            { id: 'magician', img: 'https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg' },
+            { id: 'high_priestess', img: 'https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg' },
+            { id: 'empress', img: 'https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg' },
+            { id: 'emperor', img: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg' },
+            { id: 'hierophant', img: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg' },
+            { id: 'lovers', img: 'https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_06_Lovers.jpg' },
+            { id: 'chariot', img: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/RWS_Tarot_07_Chariot.jpg' },
+            { id: 'strength', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_08_Strength.jpg' },
+            { id: 'hermit', img: 'https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_09_Hermit.jpg' },
+            { id: 'wheel_of_fortune', img: 'https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg' },
+            { id: 'justice', img: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_11_Justice.jpg' },
+            { id: 'hanged_man', img: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg' },
+            { id: 'death', img: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg' },
+            { id: 'temperance', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg' },
+            { id: 'devil', img: 'https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg' },
+            { id: 'tower', img: 'https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg' },
+            { id: 'star', img: 'https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg' },
+            { id: 'moon', img: 'https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg' },
+            { id: 'sun', img: 'https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg' },
+            { id: 'judgement', img: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg' },
+            { id: 'world', img: 'https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg' }
+        ];
+
+        Object.assign(translations['zh-CN'], {
+            tarot_cards: {
+                fool: { name: '愚者', upright: { desc: '开始, 无限可能, 天真', details: '象征全新的开始和潜力。鼓励你带着开放的心态，勇敢踏入未知。是时候放下包袱，轻松上路了。' }, reversed: { desc: '鲁莽, 愚蠢, 逃避', details: '表示你可能在逃避责任，或因考虑不周而做出鲁莽的决定。提醒你在行动前要三思，避免不必要的风险。' } },
+                magician: { name: '魔术师', upright: { desc: '创造, 显化, 能力', details: '代表你拥有将想法变为现实的强大能力。你手中已握有所有必需的工具。相信自己，主动出击。' }, reversed: { desc: '欺骗, 操纵, 滥用能力', details: '可能表示你的才能被误用或用于欺骗。警惕那些看似很有能力但意图不纯的人，也需反思自己是否足够真诚。' } },
+                high_priestess: { name: '女祭司', upright: { desc: '直觉, 智慧, 神秘', details: '通往潜意识和内在智慧的大门。提醒你答案无法从外界找到，需要向内探索。请静下心来，倾听直觉。' }, reversed: { desc: '秘密, 直觉受阻, 迷茫', details: '表示你可能忽略了内心的声音，或有些秘密被隐藏。你需要更多地关注自己的梦境和直觉，以拨开迷雾。' } },
+                empress: { name: '皇后', upright: { desc: '丰盛, 母性, 创造力', details: '丰饶、美丽与创造力的化身。预示着一个充满生产力和收获的时期。请尽情享受并创造生活中的美好。' }, reversed: { desc: '停滞, 依赖, 嫉妒', details: '可能表示创造力受阻，或在关系中过度依赖、产生嫉妒。需要找回自己的独立性，并关注自我滋养。' } },
+                emperor: { name: '皇帝', upright: { desc: '权威, 秩序, 领导力', details: '代表结构、纪律和领导力。提醒你需要为生活建立秩序和规则。是时候采取实际行动，掌控局面。' }, reversed: { desc: '专制, 死板, 失控', details: '表示过度控制、缺乏弹性，或者相反，完全失去了控制。提醒你要在规则与人性之间找到平衡。' } },
+                hierophant: { name: '教皇', upright: { desc: '传统, 教诲, 信仰', details: '象征传统、制度和精神指导。可能意味着你需要遵循既定规范，或从导师处寻求智慧。适合学习和教导。' }, reversed: { desc: '挑战传统, 束缚, 虚伪', details: '表示你可能在挑战现有的规则和信念，或感到被传统束缚。鼓励你寻找属于自己的、更真实的信仰体系。' } },
+                lovers: { name: '恋人', upright: { desc: '选择, 结合, 和谐', details: '核心议题是选择与结盟，不仅仅是爱情，更关乎价值观的统一。一个重大的决定摆在面前，请追随本心。' }, reversed: { desc: '错误选择, 冲突, 失衡', details: '可能表示关系中出现不和谐，或你做出了一个与内心相悖的错误选择。需要重新审视你的价值观和关系。' } },
+                chariot: { name: '战车', upright: { desc: '意志, 胜利, 决心', details: '预示着胜利在望，但这需要强大的意志力和决心。你必须驾驭生活中矛盾的力量，朝着目标奋勇前进。' }, reversed: { desc: '失控, 缺乏方向, 冲突', details: '表示你可能失去了对生活方向的控制，行动缺乏目标。需要重新集中你的意志力，明确你想要什么。' } },
+                strength: { name: '力量', upright: { desc: '内在力量, 勇气, 耐心', details: '真正的力量源于内心的勇气、耐心和慈悲。你有能力用温柔和坚毅去驯服内心的野兽（恐惧、欲望）。' }, reversed: { desc: '软弱, 缺乏自信, 失控', details: '可能表示你感到内在力量不足，缺乏自信。提醒你不要压抑自己的本能，而是要去理解和整合它。' } },
+                hermit: { name: '隐者', upright: { desc: '内省, 探索, 独处', details: '选择暂时远离尘嚣，向内心深处探寻智慧。现在是独处和反思的时刻，你所追寻的答案就在自己心中。' }, reversed: { desc: '孤立, 疏离, 迷失', details: '可能表示你过于孤立自己，与外界脱节。提醒你在独处和与人交往之间找到平衡，避免陷入孤独。' } },
+                wheel_of_fortune: { name: '命运之轮', upright: { desc: '转机, 循环, 运气', details: '命运之轮正在转动，生活中的变化不可避免。代表着生命的循环和转折点。请顺应潮流，抓住机遇。' }, reversed: { desc: '厄运, 停滞, 变故', details: '可能表示时运不济，计划遇到意想不到的阻碍。提醒你生活有起有落，这是暂时的，保持耐心。' } },
+                justice: { name: '正义', upright: { desc: '公平, 真相, 因果', details: '强调逻辑、真理和因果法则。要求你做出清晰、客观和公平的决定。你将为自己的行为承担相应结果。' }, reversed: { desc: '不公, 偏见, 逃避责任', details: '可能表示你正经历或造成不公平的状况。提醒你要诚实面对真相，不要逃避自己应负的责任。' } },
+                hanged_man: { name: '倒吊人', upright: { desc: '等待, 换位思考, 牺牲', details: '提醒你“无为”才是最大的“有为”。需要暂停行动，从全新的视角看待问题。通过暂时的牺牲将获得更深刻的洞见。' }, reversed: { desc: '无谓的牺牲, 停滞不前', details: '表示你的等待和牺牲可能是徒劳的，或者你只是在拖延，不愿做出改变。是时候采取行动了。' } },
+                death: { name: '死神', upright: { desc: '结束, 转变, 重生', details: '不代表真正的死亡，而是象征一个重要阶段的彻底结束。为了迎接新生，你必须放下旧事物。这是一个深刻转变的时期。' }, reversed: { desc: '抗拒改变, 停滞, 恐惧', details: '表示你正在抗拒一个必要的结束，紧抓着过去不放。这种抗拒只会带来痛苦，你需要学会放手。' } },
+                temperance: { name: '节制', upright: { desc: '平衡, 调和, 耐心', details: '代表平衡、和谐与耐心。教导你在生活的各个方面寻找中庸之道，将对立的元素完美融合。' }, reversed: { desc: '失衡, 极端, 冲突', details: '表示你的生活可能失去了平衡，走向了某个极端。需要重新审视你的行为，寻找和谐与节制。' } },
+                devil: { name: '恶魔', upright: { desc: '束缚, 诱惑, 物质主义', details: '揭示你可能被负面模式、恐惧或物质欲望所束缚。然而，锁住你的链条是松动的，你有力量挣脱。' }, reversed: { desc: '挣脱, 释放, 觉醒', details: '一个积极的信号，表示你正在意识到并开始挣脱一直束缚你的枷锁。你正在走向自由。' } },
+                tower: { name: '塔', upright: { desc: '骤变, 觉醒, 揭示真相', details: '代表突如其来的、颠覆性的变化。一个基于虚假信念建立的结构正在崩塌。虽然充满冲击，但它最终是为了揭示真相。' }, reversed: { desc: '逃避灾难, 恐惧改变', details: '表示你可能正在预感一个危机的到来并试图避免它。然而，抗拒必要的改变可能比改变本身更具破坏性。' } },
+                star: { name: '星星', upright: { desc: '希望, 治愈, 信念', details: '在经历了困难之后，星星带来了希望、治愈和灵感。对未来保持信念和乐观。是疗愈创伤、追随宇宙指引的最佳时机。' }, reversed: { desc: '失望, 绝望, 失去信念', details: '可能表示你暂时失去了希望和方向。提醒你即使在最黑暗的时候，希望之星依然存在，只是需要你重新去发现。' } },
+                moon: { name: '月亮', upright: { desc: '不安, 幻象, 直觉', details: '笼罩着一层神秘和不确定性。事物可能不像表面看起来那样。警惕幻觉和恐惧，但更要信任你的直觉。' }, reversed: { desc: '迷雾散去, 真相大白', details: '表示困惑和不安正在消散，你开始看清事物的真相。一直困扰你的问题将得到解答。' } },
+                sun: { name: '太阳', upright: { desc: '成功, 喜悦, 活力', details: '塔罗牌中最积极的牌之一，代表成功、喜悦和清晰。尽情享受生活、庆祝你的成就，未来一片光明。' }, reversed: { desc: '短暂的成功, 缺乏热情', details: '可能表示你虽然取得了成功，但内心并未感到真正的快乐，或者这份成功是短暂的。需要找回内心的热情。' } },
+                judgement: { name: '审判', upright: { desc: '反思, 复苏, 决断', details: '吹响了觉醒的号角。这是一个深刻自我反思、评估过去的时刻。是时候做出一个改变人生的重大决定了。' }, reversed: { desc: '自我怀疑, 逃避审视', details: '表示你可能在逃避对自己的评判，对自己过于苛刻，或害怕做出决定。你需要学会自我宽恕和接纳。' } },
+                world: { name: '世界', upright: { desc: '圆满, 完成, 成就', details: '代表一个重要旅程的成功完成和圆满。你已达成了目标，生活和谐。享受你的成就感，一个新的周期即将开始。' }, reversed: { desc: '未完成, 停滞, 走捷径', details: '表示某个项目或人生阶段尚未真正完成，你可能在寻求捷径而忽略了重要的步骤。需要有始有终。' } }
+            },
+            horoscope_data: {
+                aries: { name: '白羊座', dates: '3/21-4/19' }, taurus: { name: '金牛座', dates: '4/20-5/20' }, gemini: { name: '双子座', dates: '5/21-6/20' }, cancer: { name: '巨蟹座', dates: '6/21-7/22' }, leo: { name: '狮子座', dates: '7/23-8/22' }, virgo: { name: '处女座', dates: '8/23-9/22' }, libra: { name: '天秤座', dates: '9/23-10/22' }, scorpio: { name: '天蝎座', dates: '10/23-11/21' }, sagittarius: { name: '射手座', dates: '11/22-12/21' }, capricorn: { name: '摩羯座', dates: '12/22-1/19' }, aquarius: { name: '水瓶座', dates: '1/20-2/18' }, pisces: { name: '双鱼座', dates: '2/19-3/20' }
+            },
+            horoscope_fortunes: {
+                day: ["今天活力满满，适合开启新项目。", "情绪有点低落，多跟朋友聊聊。", "财运不错，可能会有意外之喜。", "注意沟通，避免与人发生口角。"],
+                week: ["本周事业运强劲，抓住机会表现自己。", "感情生活丰富多彩，单身者桃花旺。", "注意劳逸结合，身体是革命的本钱。", "可能会有些小破财，注意理财。"],
+                month: ["本月是学习和成长的好时机，适合进修。", "人际关系是本月的重点，多参加社交活动。", "财务状况稳定，适合做长期规划。", "家庭方面需要你投入更多精力。"],
+                year: ["今年是充满机遇的一年，事业将有重大突破。", "感情上将迎来新的阶段，关系更加稳固。", "需要关注健康，养成良好生活习惯。", "财务上挑战与机遇并存，需谨慎投资。"]
+            },
+            zodiac_data: {
+                rat: { icon: '🐀', name: '鼠', character: '聪明机智，适应力强，乐观开朗，善于交际。', relations: { sanhe: '龙, 猴', liuhe: '牛', chong: '马', hai: '羊' } },
+                ox: { icon: '🐂', name: '牛', character: '踏实稳重，有耐心和毅力，诚实守信。', relations: { sanhe: '蛇, 鸡', liuhe: '鼠', chong: '羊', hai: '马' } },
+                tiger: { icon: '🐅', name: '虎', character: '勇敢自信，富有领导力，热情开朗，喜欢挑战。', relations: { sanhe: '马, 狗', liuhe: '猪', chong: '猴', hai: '蛇' } },
+                rabbit: { icon: '🐇', name: '兔', character: '温和善良，乐观开朗，待人友善，喜欢和平。', relations: { sanhe: '猪, 羊', liuhe: '狗', chong: '鸡', hai: '龙' } },
+                dragon: { icon: '🐉', name: '龙', character: '自信满满，富有创造力，有远大理想和抱负。', relations: { sanhe: '鼠, 猴', liuhe: '鸡', chong: '狗', hai: '兔' } },
+                snake: { icon: '🐍', name: '蛇', character: '聪明机智，富有洞察力，有神秘气质。', relations: { sanhe: '鸡, 牛', liuhe: '猴', chong: '猪', hai: '虎' } },
+                horse: { icon: '🐎', name: '马', character: '活力充沛，热情开朗，喜欢自由和冒险。', relations: { sanhe: '虎, 狗', liuhe: '羊', chong: '鼠', hai: '牛' } },
+                sheep: { icon: '🐑', name: '羊', character: '温和善良，富有想象力，喜欢艺术和文学。', relations: { sanhe: '猪, 兔', liuhe: '马', chong: '牛', hai: '鼠' } },
+                monkey: { icon: '🐒', name: '猴', character: '聪明机智，活泼好动，善于模仿和学习。', relations: { sanhe: '鼠, 龙', liuhe: '蛇', chong: '虎', hai: '猪' } },
+                rooster: { icon: '🐓', name: '鸡', character: '自信满满，追求完美，有强烈的责任心。', relations: { sanhe: '蛇, 牛', liuhe: '龙', chong: '兔', hai: '狗' } },
+                dog: { icon: '🐕', name: '狗', character: '忠诚正直，诚实守信，待人真诚。', relations: { sanhe: '虎, 马', liuhe: '兔', chong: '龙', hai: '鸡' } },
+                pig: { icon: '🐖', name: '猪', character: '温和善良，乐观开朗，待人友善，不喜争斗。', relations: { sanhe: '兔, 羊', liuhe: '虎', chong: '蛇', hai: '猴' } }
+            },
+            zodiac_relation_names: { sanhe: '三合贵人', liuhe: '六合贵人', chong: '相冲属相', hai: '相害属相' },
+            ai_interpretation_templates: {
+                title: '**AI综合解读**\n\n针对您的问题：“**{question}**”，塔罗牌给出了如下指引：\n\n',
+                default_question: '我当下的整体状况',
+                single_card: '您抽到的核心牌是【**{cardName} - {orientation}**】，其关键词是“**{keywords}**”。\n这揭示了您当前状况的核心能量：{interpretation}\n\n**AI建议**：基于此牌意，建议您接下来重点关注与“{firstKeyword}”相关的领域。{suggestion_example}',
+                suggestion_example: '例如，如果是【愚者】，就应该勇敢尝试新事物；如果是【隐者 - 逆位】，则需要思考是否过于孤立自己。请将这个核心指引与您的实际生活相结合，您会找到答案。',
+                three_card_past: '1.  **过去 (根源)**：【**{cardName} - {orientation}**】\n    这代表了您问题的根源或过去的状况。关键词“**{keywords}**”表明，{interpretation}\n\n',
+                three_card_present: '2.  **现在 (核心)**：【**{cardName} - {orientation}**】\n    这是您目前面临的核心状况。关键词“**{keywords}**”揭示了，{interpretation}\n\n',
+                three_card_future: '3.  **未来 (指引)**：【**{cardName} - {orientation}**】\n    这指明了问题可能的发展方向。关键词“**{keywords}**”预示着，{interpretation}\n\n',
+                three_card_summary: '**AI综合建议**：整体来看，牌阵显示您从一个“{pastKeyword}”的状态，走到了当前“{presentKeyword}”的核心挑战中。为了走向一个象征着“{futureKeyword}”的未来，您当前最需要做的，是处理好【**{presentCardName}**】这张牌所揭示的课题。'
+            }
+        });
+        
+        translations['zh-TW'].tarot_cards = JSON.parse(JSON.stringify(translations['zh-CN'].tarot_cards)); // Simple copy
+        translations['zh-TW'].horoscope_data = {
+                aries: { name: '牡羊座', dates: '3/21-4/19' }, taurus: { name: '金牛座', dates: '4/20-5/20' }, gemini: { name: '雙子座', dates: '5/21-6/20' }, cancer: { name: '巨蟹座', dates: '6/21-7/22' }, leo: { name: '獅子座', dates: '7/23-8/22' }, virgo: { name: '處女座', dates: '8/23-9/22' }, libra: { name: '天秤座', dates: '9/23-10/22' }, scorpio: { name: '天蠍座', dates: '10/23-11/21' }, sagittarius: { name: '射手座', dates: '11/22-12/21' }, capricorn: { name: '摩羯座', dates: '12/22-1/19' }, aquarius: { name: '水瓶座', dates: '1/20-2/18' }, pisces: { name: '雙魚座', dates: '2/19-3/20' }
+        };
+        translations['zh-TW'].horoscope_fortunes = JSON.parse(JSON.stringify(translations['zh-CN'].horoscope_fortunes));
+        translations['zh-TW'].zodiac_data = JSON.parse(JSON.stringify(translations['zh-CN'].zodiac_data));
+        translations['zh-TW'].zodiac_relation_names = { sanhe: '三合貴人', liuhe: '六合貴人', chong: '相沖生肖', hai: '相害生肖' };
+        translations['zh-TW'].ai_interpretation_templates = {
+            title: '**AI綜合解讀**\n\n針對您的問題：「**{question}**」，塔羅牌給出了如下指引：\n\n',
+            default_question: '我當下的整體狀況',
+            single_card: '您抽到的核心牌是【**{cardName} - {orientation}**】，其關鍵詞是「**{keywords}**」。\n這揭示了您當前狀況的核心能量：{interpretation}\n\n**AI建議**：基於此牌意，建議您接下來重點關注與「{firstKeyword}」相關的領域。{suggestion_example}',
+            suggestion_example: '例如，如果是【愚者】，就應該勇敢嘗試新事物；如果是【隱者 - 逆位】，則需要思考是否過於孤立自己。請將這個核心指引與您的實際生活相結合，您會找到答案。',
+            three_card_past: '1.  **過去 (根源)**：【**{cardName} - {orientation}**】\n    這代表了您問題的根源或過去的狀況。關鍵詞「**{keywords}**」表明，{interpretation}\n\n',
+            three_card_present: '2.  **現在 (核心)**：【**{cardName} - {orientation}**】\n    這是您目前面臨的核心狀況。關鍵詞「**{keywords}**」揭示了，{interpretation}\n\n',
+            three_card_future: '3.  **未來 (指引)**：【**{cardName} - {orientation}**】\n    這指明了問題可能的發展方向。關鍵詞「**{keywords}**」預示著，{interpretation}\n\n',
+            three_card_summary: '**AI綜合建議**：整體來看，牌陣顯示您從一個「{pastKeyword}」的狀態，走到了當前「{presentKeyword}」的核心挑戰中。為了走向一個象徵著「{futureKeyword}」的未來，您當前最需要做的，是處理好【**{presentCardName}**】這張牌所揭示的課題。'
+        };
+
+        Object.assign(translations['en'], {
+            tarot_cards: {
+                fool: { name: 'The Fool', upright: { desc: 'Beginnings, potential, innocence', details: 'Symbolizes new beginnings and potential. Encourages you to step into the unknown with an open heart. It\'s time to let go of baggage and travel light.' }, reversed: { desc: 'Recklessness, foolishness, avoidance', details: 'Indicates you might be avoiding responsibility or making rash decisions without enough thought. A reminder to think before you act to avoid unnecessary risks.' } },
+                magician: { name: 'The Magician', upright: { desc: 'Creation, manifestation, skill', details: 'Represents your powerful ability to turn ideas into reality. You have all the necessary tools at your disposal. Believe in yourself and take action.' }, reversed: { desc: 'Deception, manipulation, misuse of power', details: 'May suggest your talents are being misused or used for deceit. Beware of those who seem capable but have impure intentions, and reflect on your own sincerity.' } },
+                high_priestess: { name: 'The High Priestess', upright: { desc: 'Intuition, wisdom, mystery', details: 'The gateway to the subconscious and inner wisdom. Reminds you that answers cannot be found externally but require looking within. Quiet your mind and listen to your intuition.' }, reversed: { desc: 'Secrets, blocked intuition, confusion', details: 'Indicates you may be ignoring your inner voice or that secrets are being kept. You need to pay more attention to your dreams and intuition to clear the fog.' } },
+                empress: { name: 'The Empress', upright: { desc: 'Abundance, motherhood, creativity', details: 'The embodiment of fertility, beauty, and creativity. Foretells a period of productivity and harvest. Enjoy and create the beauty in your life.' }, reversed: { desc: 'Stagnation, dependence, jealousy', details: 'May indicate creative blocks, or excessive dependence and jealousy in relationships. You need to reclaim your independence and focus on self-nurturing.' } },
+                emperor: { name: 'The Emperor', upright: { desc: 'Authority, order, leadership', details: 'Represents structure, discipline, and leadership. Reminds you to establish order and rules in your life. It\'s time to take practical action and take control.' }, reversed: { desc: 'Tyranny, rigidity, loss of control', details: 'Indicates excessive control, lack of flexibility, or conversely, a complete loss of control. A reminder to find a balance between rules and humanity.' } },
+                hierophant: { name: 'The Hierophant', upright: { desc: 'Tradition, teaching, faith', details: 'Symbolizes tradition, institutions, and spiritual guidance. May mean you need to follow established norms or seek wisdom from a mentor. A good time for learning and teaching.' }, reversed: { desc: 'Challenging tradition, restriction, hypocrisy', details: 'Indicates you may be challenging existing rules and beliefs or feel constrained by tradition. Encourages you to find your own, more authentic belief system.' } },
+                lovers: { name: 'The Lovers', upright: { desc: 'Choice, union, harmony', details: 'The core theme is choice and alliance, not just love, but the alignment of values. A major decision is at hand; follow your heart.' }, reversed: { desc: 'Wrong choice, conflict, imbalance', details: 'May indicate disharmony in a relationship or that you have made a choice contrary to your inner self. You need to re-examine your values and relationships.' } },
+                chariot: { name: 'The Chariot', upright: { desc: 'Willpower, victory, determination', details: 'Victory is in sight, but it requires strong willpower and determination. You must harness the contradictory forces in your life and charge towards your goal.' }, reversed: { desc: 'Loss of control, lack of direction, conflict', details: 'Indicates you may have lost control of your life\'s direction, and your actions lack purpose. You need to refocus your willpower and clarify what you want.' } },
+                strength: { name: 'Strength', upright: { desc: 'Inner strength, courage, patience', details: 'True strength comes from inner courage, patience, and compassion. You have the ability to tame the inner beast (fear, desire) with gentleness and perseverance.' }, reversed: { desc: 'Weakness, lack of confidence, loss of control', details: 'May indicate you feel a lack of inner strength and confidence. A reminder not to suppress your instincts but to understand and integrate them.' } },
+                hermit: { name: 'The Hermit', upright: { desc: 'Introspection, searching, solitude', details: 'Choosing to temporarily withdraw from the world to seek wisdom from within. Now is a time for solitude and reflection; the answers you seek are within yourself.' }, reversed: { desc: 'Isolation, alienation, being lost', details: 'May indicate you are isolating yourself too much and are disconnected from the outside world. A reminder to find a balance between solitude and socializing to avoid loneliness.' } },
+                wheel_of_fortune: { name: 'Wheel of Fortune', upright: { desc: 'Turning point, cycles, luck', details: 'The wheel of fortune is turning; change in life is inevitable. Represents life cycles and turning points. Go with the flow and seize opportunities.' }, reversed: { desc: 'Bad luck, stagnation, unexpected change', details: 'May indicate a period of bad luck, with plans meeting unexpected obstacles. A reminder that life has its ups and downs; this is temporary, so be patient.' } },
+                justice: { name: 'Justice', upright: { desc: 'Fairness, truth, cause and effect', details: 'Emphasizes logic, truth, and the law of cause and effect. Requires you to make clear, objective, and fair decisions. You will bear the consequences of your actions.' }, reversed: { desc: 'Injustice, bias, evading responsibility', details: 'May indicate you are experiencing or causing an unfair situation. A reminder to face the truth honestly and not evade your responsibilities.' } },
+                hanged_man: { name: 'The Hanged Man', upright: { desc: 'Waiting, new perspective, sacrifice', details: 'Reminds you that "non-action" can be the greatest "action." You need to pause and look at problems from a completely new angle. A deeper insight will be gained through temporary sacrifice.' }, reversed: { desc: 'Pointless sacrifice, stagnation', details: 'Indicates your waiting and sacrifice may be in vain, or you are just procrastinating, unwilling to change. It\'s time to take action.' } },
+                death: { name: 'Death', upright: { desc: 'Endings, transformation, rebirth', details: 'Does not represent actual death, but symbolizes the complete end of an important phase. To welcome the new, you must let go of the old. This is a period of profound transformation.' }, reversed: { desc: 'Resisting change, stagnation, fear', details: 'Indicates you are resisting a necessary ending, clinging to the past. This resistance will only bring pain; you need to learn to let go.' } },
+                temperance: { name: 'Temperance', upright: { desc: 'Balance, harmony, patience', details: 'Represents balance, harmony, and patience. Teaches you to find the middle way in all aspects of life, perfectly blending opposing elements.' }, reversed: { desc: 'Imbalance, extremes, conflict', details: 'Indicates your life may be out of balance, leaning towards an extreme. You need to re-examine your actions and seek harmony and moderation.' } },
+                devil: { name: 'The Devil', upright: { desc: 'Bondage, temptation, materialism', details: 'Reveals you may be bound by negative patterns, fear, or material desires. However, the chains that bind you are loose; you have the power to break free.' }, reversed: { desc: 'Breaking free, release, awakening', details: 'A positive sign, indicating you are becoming aware of and starting to break free from the chains that have been binding you. You are moving towards freedom.' } },
+                tower: { name: 'The Tower', upright: { desc: 'Sudden change, awakening, truth revealed', details: 'Represents sudden, disruptive change. A structure built on false beliefs is collapsing. Although shocking, it is ultimately to reveal the truth.' }, reversed: { desc: 'Avoiding disaster, fear of change', details: 'Indicates you may be sensing an impending crisis and trying to avoid it. However, resisting necessary change may be more destructive than the change itself.' } },
+                star: { name: 'The Star', upright: { desc: 'Hope, healing, faith', details: 'After hardship, the Star brings hope, healing, and inspiration. Maintain faith and optimism for the future. It is the best time to heal wounds and follow the universe\'s guidance.' }, reversed: { desc: 'Disappointment, despair, loss of faith', details: 'May indicate you have temporarily lost hope and direction. A reminder that even in the darkest times, the star of hope still exists; you just need to rediscover it.' } },
+                moon: { name: 'The Moon', upright: { desc: 'Anxiety, illusion, intuition', details: 'Shrouded in mystery and uncertainty. Things may not be as they seem. Beware of illusions and fears, but trust your intuition even more.' }, reversed: { desc: 'Fog clearing, truth revealed', details: 'Indicates confusion and unease are dissipating, and you are beginning to see the truth of things. The issues that have been troubling you will be resolved.' } },
+                sun: { name: 'The Sun', upright: { desc: 'Success, joy, vitality', details: 'One of the most positive cards in the tarot, representing success, joy, and clarity. Enjoy life, celebrate your achievements; the future is bright.' }, reversed: { desc: 'Fleeting success, lack of enthusiasm', details: 'May indicate that although you have achieved success, you do not feel true joy, or this success is temporary. You need to rediscover your inner passion.' } },
+                judgement: { name: 'Judgement', upright: { desc: 'Reflection, renewal, decision', details: 'The call to awakening has sounded. This is a moment for deep self-reflection and evaluation of the past. It\'s time to make a life-changing decision.' }, reversed: { desc: 'Self-doubt, avoiding scrutiny', details: 'Indicates you may be evading self-judgment, being too harsh on yourself, or afraid to make a decision. You need to learn self-forgiveness and acceptance.' } },
+                world: { name: 'The World', upright: { desc: 'Completion, fulfillment, achievement', details: 'Represents the successful completion and fulfillment of a significant journey. You have reached your goal, and life is harmonious. Enjoy your sense of accomplishment; a new cycle is about to begin.' }, reversed: { desc: 'Incomplete, stagnation, taking shortcuts', details: 'Indicates a project or life phase is not yet truly finished; you may be seeking shortcuts and ignoring important steps. You need to see things through to the end.' } }
+            },
+            horoscope_data: {
+                aries: { name: 'Aries', dates: '3/21-4/19' }, taurus: { name: 'Taurus', dates: '4/20-5/20' }, gemini: { name: 'Gemini', dates: '5/21-6/20' }, cancer: { name: 'Cancer', dates: '6/21-7/22' }, leo: { name: 'Leo', dates: '7/23-8/22' }, virgo: { name: 'Virgo', dates: '8/23-9/22' }, libra: { name: 'Libra', dates: '9/23-10/22' }, scorpio: { name: 'Scorpio', dates: '10/23-11/21' }, sagittarius: { name: 'Sagittarius', dates: '11/22-12/21' }, capricorn: { name: 'Capricorn', dates: '12/22-1/19' }, aquarius: { name: 'Aquarius', dates: '1/20-2/18' }, pisces: { name: 'Pisces', dates: '2/19-3/20' }
+            },
+            horoscope_fortunes: {
+                day: ["Full of energy today, perfect for starting new projects.", "Feeling a bit down, try talking to friends.", "Good financial luck, you might get a pleasant surprise.", "Pay attention to communication to avoid arguments."],
+                week: ["Strong career luck this week, seize opportunities to shine.", "Vibrant love life, singles may find romance.", "Balance work and rest; health is wealth.", "Minor financial losses might occur, manage your finances carefully."],
+                month: ["A great month for learning and growth, consider further studies.", "Focus on relationships this month, attend more social events.", "Stable financial situation, suitable for long-term planning.", "Your family needs more of your attention."],
+                year: ["A year full of opportunities with major career breakthroughs.", "Your love life will enter a new, more stable phase.", "Focus on health and develop good habits.", "Finances have both challenges and opportunities; invest wisely."]
+            },
+            zodiac_data: {
+                rat: { icon: '🐀', name: 'Rat', character: 'Intelligent, adaptable, optimistic, and sociable.', relations: { sanhe: 'Dragon, Monkey', liuhe: 'Ox', chong: 'Horse', hai: 'Goat' } },
+                ox: { icon: '🐂', name: 'Ox', character: 'Diligent, steady, patient, persistent, and honest.', relations: { sanhe: 'Snake, Rooster', liuhe: 'Rat', chong: 'Goat', hai: 'Horse' } },
+                tiger: { icon: '🐅', name: 'Tiger', character: 'Brave, confident, a natural leader, enthusiastic, and loves challenges.', relations: { sanhe: 'Horse, Dog', liuhe: 'Pig', chong: 'Monkey', hai: 'Snake' } },
+                rabbit: { icon: '🐇', name: 'Rabbit', character: 'Gentle, kind, optimistic, friendly, and peace-loving.', relations: { sanhe: 'Pig, Goat', liuhe: 'Dog', chong: 'Rooster', hai: 'Dragon' } },
+                dragon: { icon: '🐉', name: 'Dragon', character: 'Confident, creative, ambitious, with grand ideals.', relations: { sanhe: 'Rat, Monkey', liuhe: 'Rooster', chong: 'Dog', hai: 'Rabbit' } },
+                snake: { icon: '🐍', name: 'Snake', character: 'Intelligent, insightful, with a mysterious aura.', relations: { sanhe: 'Rooster, Ox', liuhe: 'Monkey', chong: 'Pig', hai: 'Tiger' } },
+                horse: { icon: '🐎', name: 'Horse', character: 'Energetic, enthusiastic, loves freedom and adventure.', relations: { sanhe: 'Tiger, Dog', liuhe: 'Goat', chong: 'Rat', hai: 'Ox' } },
+                sheep: { icon: '🐑', name: 'Goat', character: 'Gentle, kind, imaginative, with a love for arts and literature.', relations: { sanhe: 'Pig, Rabbit', liuhe: 'Horse', chong: 'Ox', hai: 'Rat' } },
+                monkey: { icon: '🐒', name: 'Monkey', character: 'Clever, lively, skilled at imitation and learning.', relations: { sanhe: 'Rat, Dragon', liuhe: 'Snake', chong: 'Tiger', hai: 'Pig' } },
+                rooster: { icon: '🐓', name: 'Rooster', character: 'Confident, a perfectionist, with a strong sense of responsibility.', relations: { sanhe: 'Snake, Ox', liuhe: 'Dragon', chong: 'Rabbit', hai: 'Dog' } },
+                dog: { icon: '🐕', name: 'Dog', character: 'Loyal, honest, sincere, and trustworthy.', relations: { sanhe: 'Tiger, Horse', liuhe: 'Rabbit', chong: 'Dragon', hai: 'Rooster' } },
+                pig: { icon: '🐖', name: 'Pig', character: 'Gentle, kind, optimistic, friendly, and avoids conflict.', relations: { sanhe: 'Rabbit, Goat', liuhe: 'Tiger', chong: 'Snake', hai: 'Monkey' } }
+            },
+            zodiac_relation_names: { sanhe: 'Three Harmonies', liuhe: 'Six Harmonies', chong: 'Conflict Animal', hai: 'Harm Animal' },
+            ai_interpretation_templates: {
+                title: '**AI Integrated Interpretation**\n\nRegarding your question: "**{question}**", the Tarot provides the following guidance:\n\n',
+                default_question: 'my current overall situation',
+                single_card: 'The core card you drew is 【**{cardName} - {orientation}**】, with keywords "**{keywords}**".\nThis reveals the core energy of your current situation: {interpretation}\n\n**AI Suggestion**: Based on this card\'s meaning, it is recommended that you focus on areas related to "{firstKeyword}". {suggestion_example}',
+                suggestion_example: 'For example, if it\'s The Fool, you should bravely try new things; if it\'s The Hermit - Reversed, you should consider if you are too isolated. Please combine this core guidance with your real-life situation to find your answer.',
+                three_card_past: '1.  **Past (Foundation)**: 【**{cardName} - {orientation}**】\n    This represents the root or past situation of your question. The keywords "**{keywords}**" suggest that {interpretation}\n\n',
+                three_card_present: '2.  **Present (Core Issue)**: 【**{cardName} - {orientation}**】\n    This is the core situation you are currently facing. The keywords "**{keywords}**" reveal that {interpretation}\n\n',
+                three_card_future: '3.  **Future (Guidance)**: 【**{cardName} - {orientation}**】\n    This indicates the likely direction of the issue. The keywords "**{keywords}**" suggest that {interpretation}\n\n',
+                three_card_summary: '**AI Integrated Suggestion**: Overall, the spread shows you have moved from a state of "{pastKeyword}" to the current core challenge of "{presentKeyword}". The key to moving towards a future symbolized by "{futureKeyword}" is to address the lesson presented by the 【**{presentCardName}**】 card.'
+            }
+        });
+        
+        function applyTranslations(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('divination_lang', lang);
+            document.documentElement.lang = lang;
+            
+            const trans = translations[lang];
+            
+            document.title = trans.page_title;
+            document.getElementById('current-lang-text').textContent = trans.lang_name;
+
+            document.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.dataset.translateKey;
+                if (trans[key]) el.innerHTML = trans[key];
+            });
+
+            document.querySelectorAll('[data-translate-key-placeholder]').forEach(el => {
+                const key = el.dataset.translateKeyPlaceholder;
+                if (trans[key]) el.placeholder = trans[key];
+            });
+            
+            renderHoroscopeGrid();
+            renderZodiacGrid();
+            populateYearSelector(40, true);
+            
+            document.getElementById('horoscope-detail').classList.add('hidden');
+            document.getElementById('zodiac-detail').classList.add('hidden');
+            document.getElementById('tarot-results').innerHTML = '';
+            document.getElementById('ai-interpretation-area').classList.add('hidden');
+            document.getElementById('question-display').classList.add('hidden');
+        }
+
+        function setupLanguageSwitcher() {
+            document.querySelectorAll('#lang-dropdown a').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const lang = e.target.dataset.lang;
+                    applyTranslations(lang);
+                    document.getElementById('lang-dropdown').style.display = 'none';
+                    setTimeout(() => document.getElementById('lang-dropdown').style.display = '', 200);
+                });
+            });
+        }
+        // --- END OF I18N SETUP ---
+
+
         // --- 通用功能 ---
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
@@ -282,6 +635,7 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
+                if (this.closest('#lang-dropdown')) return; // Ignore lang switcher links
                 if (!mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.add('hidden');
                     menuToggle.innerHTML = '<i class="fa fa-bars"></i>';
@@ -307,31 +661,6 @@
         const aiResultText = document.getElementById('ai-result-text');
         let currentSpread = 'single';
         let drawnCardsData = [];
-
-        const tarotCardData = [
-            { name: '愚者', img: 'https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg', upright: { desc: '开始, 无限可能, 天真', details: '象征全新的开始和潜力。鼓励你带着开放的心态，勇敢踏入未知。是时候放下包袱，轻松上路了。' }, reversed: { desc: '鲁莽, 愚蠢, 逃避', details: '表示你可能在逃避责任，或因考虑不周而做出鲁莽的决定。提醒你在行动前要三思，避免不必要的风险。' } },
-            { name: '魔术师', img: 'https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg', upright: { desc: '创造, 显化, 能力', details: '代表你拥有将想法变为现实的强大能力。你手中已握有所有必需的工具。相信自己，主动出击。' }, reversed: { desc: '欺骗, 操纵, 滥用能力', details: '可能表示你的才能被误用或用于欺骗。警惕那些看似很有能力但意图不纯的人，也需反思自己是否足够真诚。' } },
-            { name: '女祭司', img: 'https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg', upright: { desc: '直觉, 智慧, 神秘', details: '通往潜意识和内在智慧的大门。提醒你答案无法从外界找到，需要向内探索。请静下心来，倾听直觉。' }, reversed: { desc: '秘密, 直觉受阻, 迷茫', details: '表示你可能忽略了内心的声音，或有些秘密被隐藏。你需要更多地关注自己的梦境和直觉，以拨开迷雾。' } },
-            { name: '皇后', img: 'https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg', upright: { desc: '丰盛, 母性, 创造力', details: '丰饶、美丽与创造力的化身。预示着一个充满生产力和收获的时期。请尽情享受并创造生活中的美好。' }, reversed: { desc: '停滞, 依赖, 嫉妒', details: '可能表示创造力受阻，或在关系中过度依赖、产生嫉妒。需要找回自己的独立性，并关注自我滋养。' } },
-            { name: '皇帝', img: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg', upright: { desc: '权威, 秩序, 领导力', details: '代表结构、纪律和领导力。提醒你需要为生活建立秩序和规则。是时候采取实际行动，掌控局面。' }, reversed: { desc: '专制, 死板, 失控', details: '表示过度控制、缺乏弹性，或者相反，完全失去了控制。提醒你要在规则与人性之间找到平衡。' } },
-            { name: '教皇', img: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg', upright: { desc: '传统, 教诲, 信仰', details: '象征传统、制度和精神指导。可能意味着你需要遵循既定规范，或从导师处寻求智慧。适合学习和教导。' }, reversed: { desc: '挑战传统, 束缚, 虚伪', details: '表示你可能在挑战现有的规则和信念，或感到被传统束缚。鼓励你寻找属于自己的、更真实的信仰体系。' } },
-            { name: '恋人', img: 'https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_06_Lovers.jpg', upright: { desc: '选择, 结合, 和谐', details: '核心议题是选择与结盟，不仅仅是爱情，更关乎价值观的统一。一个重大的决定摆在面前，请追随本心。' }, reversed: { desc: '错误选择, 冲突, 失衡', details: '可能表示关系中出现不和谐，或你做出了一个与内心相悖的错误选择。需要重新审视你的价值观和关系。' } },
-            { name: '战车', img: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/RWS_Tarot_07_Chariot.jpg', upright: { desc: '意志, 胜利, 决心', details: '预示着胜利在望，但这需要强大的意志力和决心。你必须驾驭生活中矛盾的力量，朝着目标奋勇前进。' }, reversed: { desc: '失控, 缺乏方向, 冲突', details: '表示你可能失去了对生活方向的控制，行动缺乏目标。需要重新集中你的意志力，明确你想要什么。' } },
-            { name: '力量', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_08_Strength.jpg', upright: { desc: '内在力量, 勇气, 耐心', details: '真正的力量源于内心的勇气、耐心和慈悲。你有能力用温柔和坚毅去驯服内心的野兽（恐惧、欲望）。' }, reversed: { desc: '软弱, 缺乏自信, 失控', details: '可能表示你感到内在力量不足，缺乏自信。提醒你不要压抑自己的本能，而是要去理解和整合它。' } },
-            { name: '隐者', img: 'https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_09_Hermit.jpg', upright: { desc: '内省, 探索, 独处', details: '选择暂时远离尘嚣，向内心深处探寻智慧。现在是独处和反思的时刻，你所追寻的答案就在自己心中。' }, reversed: { desc: '孤立, 疏离, 迷失', details: '可能表示你过于孤立自己，与外界脱节。提醒你在独处和与人交往之间找到平衡，避免陷入孤独。' } },
-            { name: '命运之轮', img: 'https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg', upright: { desc: '转机, 循环, 运气', details: '命运之轮正在转动，生活中的变化不可避免。代表着生命的循环和转折点。请顺应潮流，抓住机遇。' }, reversed: { desc: '厄运, 停滞, 变故', details: '可能表示时运不济，计划遇到意想不到的阻碍。提醒你生活有起有落，这是暂时的，保持耐心。' } },
-            { name: '正义', img: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_11_Justice.jpg', upright: { desc: '公平, 真相, 因果', details: '强调逻辑、真理和因果法则。要求你做出清晰、客观和公平的决定。你将为自己的行为承担相应结果。' }, reversed: { desc: '不公, 偏见, 逃避责任', details: '可能表示你正经历或造成不公平的状况。提醒你要诚实面对真相，不要逃避自己应负的责任。' } },
-            { name: '倒吊人', img: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg', upright: { desc: '等待, 换位思考, 牺牲', details: '提醒你“无为”才是最大的“有为”。需要暂停行动，从全新的视角看待问题。通过暂时的牺牲将获得更深刻的洞见。' }, reversed: { desc: '无谓的牺牲, 停滞不前', details: '表示你的等待和牺牲可能是徒劳的，或者你只是在拖延，不愿做出改变。是时候采取行动了。' } },
-            { name: '死神', img: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg', upright: { desc: '结束, 转变, 重生', details: '不代表真正的死亡，而是象征一个重要阶段的彻底结束。为了迎接新生，你必须放下旧事物。这是一个深刻转变的时期。' }, reversed: { desc: '抗拒改变, 停滞, 恐惧', details: '表示你正在抗拒一个必要的结束，紧抓着过去不放。这种抗拒只会带来痛苦，你需要学会放手。' } },
-            { name: '节制', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg', upright: { desc: '平衡, 调和, 耐心', details: '代表平衡、和谐与耐心。教导你在生活的各个方面寻找中庸之道，将对立的元素完美融合。' }, reversed: { desc: '失衡, 极端, 冲突', details: '表示你的生活可能失去了平衡，走向了某个极端。需要重新审视你的行为，寻找和谐与节制。' } },
-            { name: '恶魔', img: 'https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg', upright: { desc: '束缚, 诱惑, 物质主义', details: '揭示你可能被负面模式、恐惧或物质欲望所束缚。然而，锁住你的链条是松动的，你有力量挣脱。' }, reversed: { desc: '挣脱, 释放, 觉醒', details: '一个积极的信号，表示你正在意识到并开始挣脱一直束缚你的枷锁。你正在走向自由。' } },
-            { name: '塔', img: 'https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg', upright: { desc: '骤变, 觉醒, 揭示真相', details: '代表突如其来的、颠覆性的变化。一个基于虚假信念建立的结构正在崩塌。虽然充满冲击，但它最终是为了揭示真相。' }, reversed: { desc: '逃避灾难, 恐惧改变', details: '表示你可能正在预感一个危机的到来并试图避免它。然而，抗拒必要的改变可能比改变本身更具破坏性。' } },
-            { name: '星星', img: 'https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg', upright: { desc: '希望, 治愈, 信念', details: '在经历了困难之后，星星带来了希望、治愈和灵感。对未来保持信念和乐观。是疗愈创伤、追随宇宙指引的最佳时机。' }, reversed: { desc: '失望, 绝望, 失去信念', details: '可能表示你暂时失去了希望和方向。提醒你即使在最黑暗的时候，希望之星依然存在，只是需要你重新去发现。' } },
-            { name: '月亮', img: 'https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg', upright: { desc: '不安, 幻象, 直觉', details: '笼罩着一层神秘和不确定性。事物可能不像表面看起来那样。警惕幻觉和恐惧，但更要信任你的直觉。' }, reversed: { desc: '迷雾散去, 真相大白', details: '表示困惑和不安正在消散，你开始看清事物的真相。一直困扰你的问题将得到解答。' } },
-            { name: '太阳', img: 'https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg', upright: { desc: '成功, 喜悦, 活力', details: '塔罗牌中最积极的牌之一，代表成功、喜悦和清晰。尽情享受生活、庆祝你的成就，未来一片光明。' }, reversed: { desc: '短暂的成功, 缺乏热情', details: '可能表示你虽然取得了成功，但内心并未感到真正的快乐，或者这份成功是短暂的。需要找回内心的热情。' } },
-            { name: '审判', img: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg', upright: { desc: '反思, 复苏, 决断', details: '吹响了觉醒的号角。这是一个深刻自我反思、评估过去的时刻。是时候做出一个改变人生的重大决定了。' }, reversed: { desc: '自我怀疑, 逃避审视', details: '表示你可能在逃避对自己的评判，对自己过于苛刻，或害怕做出决定。你需要学会自我宽恕和接纳。' } },
-            { name: '世界', img: 'https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg', upright: { desc: '圆满, 完成, 成就', details: '代表一个重要旅程的成功完成和圆满。你已达成了目标，生活和谐。享受你的成就感，一个新的周期即将开始。' }, reversed: { desc: '未完成, 停滞, 走捷径', details: '表示某个项目或人生阶段尚未真正完成，你可能在寻求捷径而忽略了重要的步骤。需要有始有终。' } }
-        ];
 
         spreadButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -368,12 +697,17 @@
                 let cardCount = currentSpread === 'three' ? 3 : 1;
                 const shuffledCards = [...tarotCardData].sort(() => 0.5 - Math.random());
                 
+                const t = translations[currentLanguage];
+
                 for (let i = 0; i < cardCount; i++) {
-                    const cardData = shuffledCards[i];
+                    const cardBase = shuffledCards[i];
+                    const cardLangData = t.tarot_cards[cardBase.id];
                     const isReversed = Math.random() < 0.5;
-                    const cardInfo = isReversed ? cardData.reversed : cardData.upright;
+                    const orientationKey = isReversed ? 'reversed' : 'upright';
+                    const orientationText = isReversed ? t.tarot_orientation_reversed : t.tarot_orientation_upright;
+                    const cardInfo = cardLangData[orientationKey];
                     
-                    drawnCardsData.push({ name: cardData.name, orientation: isReversed ? '逆位' : '正位', interpretation: cardInfo.details, keywords: cardInfo.desc });
+                    drawnCardsData.push({ name: cardLangData.name, orientation: orientationText, interpretation: cardInfo.details, keywords: cardInfo.desc });
 
                     const cardElement = document.createElement('div');
                     cardElement.className = 'tarot-card-container w-56 h-96 cursor-pointer'; 
@@ -382,15 +716,15 @@
                             <div class="tarot-card-face bg-light text-dark flex flex-col">
                                 <div class="flex-grow w-full relative bg-dark/20 flex items-center justify-center">
                                     <i class="fa fa-spinner fa-spin text-light/50 text-2xl absolute"></i>
-                                    <img src="${cardData.img}" alt="${cardData.name}" class="w-full h-full object-cover opacity-0 transition-opacity duration-500 ${isReversed ? 'is-reversed-img' : ''}">
+                                    <img src="${cardBase.img}" alt="${cardLangData.name}" class="w-full h-full object-cover opacity-0 transition-opacity duration-500 ${isReversed ? 'is-reversed-img' : ''}">
                                 </div>
                                 <div class="p-4 text-center">
-                                    <h3 class="font-serif font-bold text-primary text-xl">${cardData.name} <span class="text-sm font-sans font-normal ${isReversed ? 'text-red-500' : 'text-secondary'}">[${isReversed ? '逆位' : '正位'}]</span></h3>
+                                    <h3 class="font-serif font-bold text-primary text-xl">${cardLangData.name} <span class="text-sm font-sans font-normal ${isReversed ? 'text-red-500' : 'text-secondary'}">[${orientationText}]</span></h3>
                                     <p class="text-xs text-gray-600 mt-1">${cardInfo.desc}</p>
                                 </div>
                             </div>
                             <div class="tarot-card-face tarot-card-details bg-gradient-to-br from-primary to-dark text-light p-6 flex flex-col">
-                                <h3 class="font-serif font-bold text-accent text-2xl mb-3">${cardData.name} <span class="text-lg">[${isReversed ? '逆位' : '正位'}]</span></h3>
+                                <h3 class="font-serif font-bold text-accent text-2xl mb-3">${cardLangData.name} <span class="text-lg">[${orientationText}]</span></h3>
                                 <hr class="border-accent/30 mb-4">
                                 <p class="text-sm flex-grow overflow-y-auto">${cardInfo.details}</p>
                             </div>
@@ -409,25 +743,48 @@
 
         aiInterpretBtn.addEventListener('click', () => {
             const btn = aiInterpretBtn;
+            const t = translations[currentLanguage];
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa fa-spinner fa-spin mr-2"></i>AI 正在解读中...`;
+            btn.querySelector('span').textContent = t.tarot_ai_interpreting_button;
+            btn.querySelector('i').className = 'fa fa-spinner fa-spin mr-2';
             aiResult.classList.add('hidden');
 
             setTimeout(() => {
-                const question = tarotQuestionInput.value.trim() || "我当下的整体状况";
-                let interpretation = `**AI综合解读**\n\n针对您的问题：“**${question}**”，塔罗牌给出了如下指引：\n\n`;
+                const temp = t.ai_interpretation_templates;
+                const question = tarotQuestionInput.value.trim() || temp.default_question;
+                let interpretation = temp.title.replace('{question}', question);
                 
                 if (drawnCardsData.length === 1) {
                     const card = drawnCardsData[0];
-                    interpretation += `您抽到的核心牌是【**${card.name} - ${card.orientation}**】，其关键词是“**${card.keywords}**”。\n这揭示了您当前状况的核心能量：${card.interpretation}\n\n**AI建议**：基于此牌意，建议您接下来重点关注与“${card.keywords.split(', ')[0]}”相关的领域。例如，如果是【愚者】，就应该勇敢尝试新事物；如果是【隐者 - 逆位】，则需要思考是否过于孤立自己。请将这个核心指引与您的实际生活相结合，您会找到答案。`;
+                    interpretation += temp.single_card
+                        .replace('{cardName}', card.name)
+                        .replace('{orientation}', card.orientation)
+                        .replace('{keywords}', card.keywords)
+                        .replace('{interpretation}', card.interpretation)
+                        .replace('{firstKeyword}', card.keywords.split(', ')[0])
+                        .replace('{suggestion_example}', temp.suggestion_example);
                 } else {
-                    const past = drawnCardsData[0];
-                    const present = drawnCardsData[1];
-                    const future = drawnCardsData[2];
-                    interpretation += `1.  **过去 (根源)**：【**${past.name} - ${past.orientation}**】\n    这代表了您问题的根源或过去的状况。关键词“**${past.keywords}**”表明，${past.interpretation}\n\n`;
-                    interpretation += `2.  **现在 (核心)**：【**${present.name} - ${present.orientation}**】\n    这是您目前面临的核心状况。关键词“**${present.keywords}**”揭示了，${present.interpretation}\n\n`;
-                    interpretation += `3.  **未来 (指引)**：【**${future.name} - ${future.orientation}**】\n    这指明了问题可能的发展方向。关键词“**${future.keywords}**”预示着，${future.interpretation}\n\n`;
-                    interpretation += `**AI综合建议**：整体来看，牌阵显示您从一个“${past.keywords.split(', ')[0]}”的状态，走到了当前“${present.keywords.split(', ')[0]}”的核心挑战中。为了走向一个象征着“${future.keywords.split(', ')[0]}”的未来，您当前最需要做的，是处理好【**${present.name}**】这张牌所揭示的课题。`;
+                    const [past, present, future] = drawnCardsData;
+                    interpretation += temp.three_card_past
+                        .replace('{cardName}', past.name)
+                        .replace('{orientation}', past.orientation)
+                        .replace('{keywords}', past.keywords)
+                        .replace('{interpretation}', past.interpretation);
+                    interpretation += temp.three_card_present
+                        .replace('{cardName}', present.name)
+                        .replace('{orientation}', present.orientation)
+                        .replace('{keywords}', present.keywords)
+                        .replace('{interpretation}', present.interpretation);
+                    interpretation += temp.three_card_future
+                        .replace('{cardName}', future.name)
+                        .replace('{orientation}', future.orientation)
+                        .replace('{keywords}', future.keywords)
+                        .replace('{interpretation}', future.interpretation);
+                    interpretation += temp.three_card_summary
+                        .replace('{pastKeyword}', past.keywords.split(', ')[0])
+                        .replace('{presentKeyword}', present.keywords.split(', ')[0])
+                        .replace('{futureKeyword}', future.keywords.split(', ')[0])
+                        .replace('{presentCardName}', present.name);
                 }
                 
                 aiResultText.textContent = interpretation;
@@ -435,29 +792,46 @@
                 aiResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 
                 btn.disabled = false;
-                btn.innerHTML = `<i class="fa fa-magic mr-2"></i>AI 结合问题解读`;
-            }, 2500); // 模拟AI思考时间
+                btn.querySelector('span').textContent = t.tarot_ai_interpret_button;
+                btn.querySelector('i').className = 'fa fa-magic mr-2';
+            }, 2500);
         });
 
         // --- 星座运势功能 ---
-        const horoscopeCards = document.querySelectorAll('.horoscope-card');
         const horoscopeDetail = document.getElementById('horoscope-detail');
         const closeHoroscopeBtn = document.getElementById('close-horoscope');
         const horoscopeTitle = document.getElementById('horoscope-title');
         const horoscopeIndexes = document.getElementById('horoscope-indexes');
         const horoscopeContent = document.getElementById('horoscope-content');
         const horoscopeGranularitySelector = document.getElementById('horoscope-granularity-selector');
-        const horoscopeData = {
-            aries: { name: '白羊座' }, taurus: { name: '金牛座' }, gemini: { name: '双子座' }, cancer: { name: '巨蟹座' }, leo: { name: '狮子座' }, virgo: { name: '处女座' }, libra: { name: '天秤座' }, scorpio: { name: '天蝎座' }, sagittarius: { name: '射手座' }, capricorn: { name: '摩羯座' }, aquarius: { name: '水瓶座' }, pisces: { name: '双鱼座' }
-        };
+        
+        function renderHoroscopeGrid() {
+            const grid = document.getElementById('horoscope-grid');
+            grid.innerHTML = '';
+            const t = translations[currentLanguage];
+            const data = t.horoscope_data;
+            const signSymbols = { aries: '♈', taurus: '♉', gemini: '♊', cancer: '♋', leo: '♌', virgo: '♍', libra: '♎', scorpio: '♏', sagittarius: '♐', capricorn: '♑', aquarius: '♒', pisces: '♓' };
+            for (const sign in data) {
+                grid.innerHTML += `
+                    <div class="horoscope-card bg-dark/50 p-6 rounded-xl border border-accent/20 text-center cursor-pointer" data-sign="${sign}">
+                        <div class="text-4xl mb-3 text-accent">${signSymbols[sign]}</div>
+                        <h3 class="text-xl font-semibold mb-2">${data[sign].name}</h3>
+                        <p class="text-light/70 text-sm mb-4">${data[sign].dates}</p>
+                        <button class="text-accent hover:underline text-sm">${t.horoscope_check_fortune}</button>
+                    </div>`;
+            }
+            grid.querySelectorAll('.horoscope-card').forEach(card => card.addEventListener('click', () => {
+                const sign = card.dataset.sign;
+                updateHoroscopeView(sign);
+                horoscopeDetail.classList.remove('hidden');
+                horoscopeDetail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }));
+        }
+        
         function getHoroscopeFortune(sign, granularity) {
+            const t = translations[currentLanguage];
+            const fortunes = t.horoscope_fortunes;
             const seed = new Date().getDate() + sign.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
-            const fortunes = {
-                day: ["今天活力满满，适合开启新项目。", "情绪有点低落，多跟朋友聊聊。", "财运不错，可能会有意外之喜。", "注意沟通，避免与人发生口角。"],
-                week: ["本周事业运强劲，抓住机会表现自己。", "感情生活丰富多彩，单身者桃花旺。", "注意劳逸结合，身体是革命的本钱。", "可能会有些小破财，注意理财。"],
-                month: ["本月是学习和成长的好时机，适合进修。", "人际关系是本月的重点，多参加社交活动。", "财务状况稳定，适合做长期规划。", "家庭方面需要你投入更多精力。"],
-                year: ["今年是充满机遇的一年，事业将有重大突破。", "感情上将迎来新的阶段，关系更加稳固。", "需要关注健康，养成良好生活习惯。", "财务上挑战与机遇并存，需谨慎投资。"]
-            };
             return {
                 text: fortunes[granularity][seed % fortunes[granularity].length],
                 love: (seed * 2 % 3) + 3,
@@ -467,24 +841,22 @@
         }
         function renderStars(count) { let s = ''; for(let i=0;i<5;i++){s+=`<i class="fa fa-${i<count?'star':'star-o'}"></i>`;} return s; }
         function updateHoroscopeView(sign, granularity = 'day') {
-            const data = horoscopeData[sign];
+            const t = translations[currentLanguage];
+            const data = t.horoscope_data[sign];
             const fortune = getHoroscopeFortune(sign, granularity);
-            const titleMap = { day: '今日', week: '本周', month: '本月', year: '本年' };
-            horoscopeTitle.textContent = `${data.name}${titleMap[granularity]}运势`;
+            const titleMap = { day: t.horoscope_day, week: t.horoscope_week, month: t.horoscope_month, year: t.horoscope_year };
+            horoscopeTitle.textContent = `${data.name} ${titleMap[granularity]}${t.horoscope_fortune_suffix}`;
             horoscopeContent.textContent = fortune.text;
-            horoscopeIndexes.innerHTML = `<div class="bg-primary/20 p-4 rounded-lg"><h4 class="font-semibold mb-2">爱情指数</h4><div class="flex text-accent mb-1">${renderStars(fortune.love)}</div></div><div class="bg-primary/20 p-4 rounded-lg"><h4 class="font-semibold mb-2">事业指数</h4><div class="flex text-accent mb-1">${renderStars(fortune.career)}</div></div><div class="bg-primary/20 p-4 rounded-lg"><h4 class="font-semibold mb-2">财运指数</h4><div class="flex text-accent mb-1">${renderStars(fortune.wealth)}</div></div>`;
+            horoscopeIndexes.innerHTML = `
+                <div class="bg-primary/20 p-4 rounded-lg"><h4 class="font-semibold mb-2">${t.horoscope_love_index}</h4><div class="flex text-accent mb-1">${renderStars(fortune.love)}</div></div>
+                <div class="bg-primary/20 p-4 rounded-lg"><h4 class="font-semibold mb-2">${t.horoscope_career_index}</h4><div class="flex text-accent mb-1">${renderStars(fortune.career)}</div></div>
+                <div class="bg-primary/20 p-4 rounded-lg"><h4 class="font-semibold mb-2">${t.horoscope_wealth_index}</h4><div class="flex text-accent mb-1">${renderStars(fortune.wealth)}</div></div>`;
             horoscopeDetail.dataset.currentSign = sign;
             horoscopeGranularitySelector.querySelectorAll('button').forEach(btn => {
                 btn.classList.toggle('bg-primary', btn.dataset.granularity === granularity);
                 btn.classList.toggle('bg-dark/70', btn.dataset.granularity !== granularity);
             });
         }
-        horoscopeCards.forEach(card => card.addEventListener('click', () => {
-            const sign = card.dataset.sign;
-            updateHoroscopeView(sign);
-            horoscopeDetail.classList.remove('hidden');
-            horoscopeDetail.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }));
         horoscopeGranularitySelector.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
             const sign = horoscopeDetail.dataset.currentSign;
             if(sign) updateHoroscopeView(sign, btn.dataset.granularity);
@@ -492,77 +864,87 @@
         closeHoroscopeBtn.addEventListener('click', () => horoscopeDetail.classList.add('hidden'));
 
         // --- 生肖功能 ---
-        const zodiacCards = document.querySelectorAll('.生肖-card');
         const zodiacDetail = document.getElementById('zodiac-detail');
         const closeZodiacBtn = document.getElementById('close-zodiac');
         const zodiacYearSelector = document.getElementById('zodiac-year-selector');
-        const zodiacStaticData = {
-            rat: { icon: '🐀', name: '鼠', character: '聪明机智，适应力强，乐观开朗，善于交际。', relations: { sanhe: '龙, 猴', liuhe: '牛', chong: '马', hai: '羊' } },
-            ox: { icon: '🐂', name: '牛', character: '踏实稳重，有耐心和毅力，诚实守信。', relations: { sanhe: '蛇, 鸡', liuhe: '鼠', chong: '羊', hai: '马' } },
-            tiger: { icon: '🐅', name: '虎', character: '勇敢自信，富有领导力，热情开朗，喜欢挑战。', relations: { sanhe: '马, 狗', liuhe: '猪', chong: '猴', hai: '蛇' } },
-            rabbit: { icon: '🐇', name: '兔', character: '温和善良，乐观开朗，待人友善，喜欢和平。', relations: { sanhe: '猪, 羊', liuhe: '狗', chong: '鸡', hai: '龙' } },
-            dragon: { icon: '🐉', name: '龙', character: '自信满满，富有创造力，有远大理想和抱负。', relations: { sanhe: '鼠, 猴', liuhe: '鸡', chong: '狗', hai: '兔' } },
-            snake: { icon: '🐍', name: '蛇', character: '聪明机智，富有洞察力，有神秘气质。', relations: { sanhe: '鸡, 牛', liuhe: '猴', chong: '猪', hai: '虎' } },
-            horse: { icon: '🐎', name: '马', character: '活力充沛，热情开朗，喜欢自由和冒险。', relations: { sanhe: '虎, 狗', liuhe: '羊', chong: '鼠', hai: '牛' } },
-            sheep: { icon: '🐑', name: '羊', character: '温和善良，富有想象力，喜欢艺术和文学。', relations: { sanhe: '猪, 兔', liuhe: '马', chong: '牛', hai: '鼠' } },
-            monkey: { icon: '🐒', name: '猴', character: '聪明机智，活泼好动，善于模仿和学习。', relations: { sanhe: '鼠, 龙', liuhe: '蛇', chong: '虎', hai: '猪' } },
-            rooster: { icon: '🐓', name: '鸡', character: '自信满满，追求完美，有强烈的责任心。', relations: { sanhe: '蛇, 牛', liuhe: '龙', chong: '兔', hai: '狗' } },
-            dog: { icon: '🐕', name: '狗', character: '忠诚正直，诚实守信，待人真诚。', relations: { sanhe: '虎, 马', liuhe: '兔', chong: '龙', hai: '鸡' } },
-            pig: { icon: '🐖', name: '猪', character: '温和善良，乐观开朗，待人友善，不喜争斗。', relations: { sanhe: '兔, 羊', liuhe: '虎', chong: '蛇', hai: '猴' } }
-        };
+        
         const naYinData = { '甲子乙丑': '海中金', '丙寅丁卯': '炉中火', '戊辰己巳': '大林木', '庚午辛未': '路旁土', '壬申癸酉': '剑锋金', '甲戌乙亥': '山头火', '丙子丁丑': '涧下水', '戊寅己卯': '城头土', '庚辰辛巳': '白蜡金', '壬午癸未': '杨柳木', '甲申乙酉': '泉中水', '丙戌丁亥': '屋上土', '戊子己丑': '霹雳火', '庚寅辛卯': '松柏木', '壬辰癸巳': '长流水', '甲午乙未': '沙中金', '丙申丁酉': '山下火', '戊戌己亥': '平地木', '庚子辛丑': '壁上土', '壬寅癸卯': '金箔金', '甲辰乙巳': '覆灯火', '丙午丁未': '天河水', '戊申己酉': '大驿土', '庚戌辛亥': '钗钏金', '壬子癸丑': '桑柘木', '甲寅乙卯': '大溪水', '丙辰丁巳': '沙中土', '戊午己未': '天上火', '庚申辛酉': '石榴木', '壬戌癸亥': '大海水' };
         const heavenlyStems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
         const earthlyBranches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-        function populateYearSelector(selectorId, range, reverse = false) {
-            const selector = document.getElementById(selectorId);
-            if (!selector) return;
-            selector.innerHTML = '';
+        
+        function renderZodiacGrid() {
+            const grid = document.getElementById('zodiac-grid');
+            grid.innerHTML = '';
+            const t = translations[currentLanguage];
+            const data = t.zodiac_data;
+            for (const animal in data) {
+                grid.innerHTML += `
+                    <div class="生肖-card bg-dark/30 p-5 rounded-xl border border-accent/20 text-center cursor-pointer" data-animal="${animal}">
+                        <div class="text-4xl mb-3 text-accent">${data[animal].icon}</div>
+                        <h3 class="text-lg font-semibold">${data[animal].name}</h3>
+                    </div>`;
+            }
+             grid.querySelectorAll('.生肖-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const animal = card.dataset.animal;
+                    const t = translations[currentLanguage];
+                    const t_animal = t.zodiac_data[animal];
+                    document.getElementById('zodiac-icon').textContent = t_animal.icon;
+                    document.getElementById('zodiac-name').textContent = t.zodiac_prefix + t_animal.name;
+                    document.getElementById('zodiac-character').textContent = t_animal.character;
+                    document.getElementById('zodiac-relations').innerHTML = `
+                        <p><strong class="text-accent">${t.zodiac_relation_names.sanhe}:</strong> ${t_animal.relations.sanhe}</p>
+                        <p><strong class="text-accent">${t.zodiac_relation_names.liuhe}:</strong> ${t_animal.relations.liuhe}</p>
+                        <p><strong class="text-red-400">${t.zodiac_relation_names.chong}:</strong> ${t_animal.relations.chong}</p>
+                        <p><strong class="text-yellow-400">${t.zodiac_relation_names.hai}:</strong> ${t_animal.relations.hai}</p>
+                    `;
+                    updateZodiacNayinView();
+                    zodiacDetail.dataset.currentAnimal = animal;
+                    zodiacDetail.classList.remove('hidden');
+                    zodiacDetail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            });
+        }
+        
+        function populateYearSelector(range, reverse = false) {
+            zodiacYearSelector.innerHTML = '';
             const currentYear = new Date().getFullYear();
             for (let i = -range; i <= range; i++) {
                 const year = currentYear + i;
                 const option = document.createElement('option');
                 option.value = year;
-                option.textContent = `${year}年`;
+                option.textContent = `${year}${translations[currentLanguage].zodiac_year_suffix}`;
                 if (year === currentYear) option.selected = true;
-                if (reverse) selector.prepend(option);
-                else selector.appendChild(option);
+                if (reverse) zodiacYearSelector.prepend(option);
+                else zodiacYearSelector.appendChild(option);
             }
         }
         function getNayinForYear(year) {
+            const t = translations[currentLanguage];
+            if (currentLanguage === 'en') return t.zodiac_nayin_unavailable;
             const offset = year - 1984; const stemIndex = (offset % 10 + 10) % 10; const branchIndex = (offset % 12 + 12) % 12; const jiazi = heavenlyStems[stemIndex] + earthlyBranches[branchIndex];
-            for(const key in naYinData) { if(key.includes(jiazi)) { return `【${jiazi}年】生人，其纳音五行为【${naYinData[key]}】。`; } } return '暂无该年份的纳音解析。';
+            for(const key in naYinData) { if(key.includes(jiazi)) { return `【${jiazi}${t.zodiac_year_suffix}】生人，其纳音五行为【${naYinData[key]}】。`; } } return t.zodiac_nayin_unavailable;
         }
-        function updateZodiacView(animal) {
+        function updateZodiacNayinView() {
             document.getElementById('zodiac-nayin-text').textContent = getNayinForYear(zodiacYearSelector.value);
         }
-        zodiacCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const animal = card.dataset.animal;
-                const data = zodiacStaticData[animal];
-                document.getElementById('zodiac-icon').textContent = data.icon;
-                document.getElementById('zodiac-name').textContent = `属${data.name}`;
-                document.getElementById('zodiac-character').textContent = data.character;
-                document.getElementById('zodiac-relations').innerHTML = `
-                    <p><strong class="text-accent">三合贵人:</strong> ${data.relations.sanhe}</p>
-                    <p><strong class="text-accent">六合贵人:</strong> ${data.relations.liuhe}</p>
-                    <p><strong class="text-red-400">相冲属相:</strong> ${data.relations.chong}</p>
-                    <p><strong class="text-yellow-400">相害属相:</strong> ${data.relations.hai}</p>
-                `;
-                updateZodiacView(animal);
-                zodiacDetail.dataset.currentAnimal = animal;
-                zodiacDetail.classList.remove('hidden');
-                zodiacDetail.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            });
-        });
-        zodiacYearSelector.addEventListener('change', () => {
-            const currentAnimal = zodiacDetail.dataset.currentAnimal;
-            if (currentAnimal) updateZodiacView(currentAnimal);
-        });
+        zodiacYearSelector.addEventListener('change', updateZodiacNayinView);
         closeZodiacBtn.addEventListener('click', () => zodiacDetail.classList.add('hidden'));
 
         // --- 页面初始化 ---
         document.addEventListener('DOMContentLoaded', () => {
-            populateYearSelector('zodiac-year-selector', 40, true);
+            setupLanguageSwitcher();
+            const savedLang = localStorage.getItem('divination_lang');
+            const browserLang = navigator.language.toLowerCase();
+            let initialLang = 'zh-CN';
+            if (savedLang && translations[savedLang]) {
+                initialLang = savedLang;
+            } else if (browserLang.startsWith('en')) {
+                initialLang = 'en';
+            } else if (browserLang === 'zh-tw' || browserLang === 'zh-hk') {
+                initialLang = 'zh-TW';
+            }
+            applyTranslations(initialLang);
         });
     </script>
 </body>
